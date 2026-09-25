@@ -61,13 +61,13 @@
 }
 
 @theme {
-  --color-brand: #6f1d1b;
+  --color-brand: #723d46;
   --color-brand-light: #f5dcdc;
   --color-brand-accent: #b71c1c;
 }
 
 :root {
-  --background: #fdf0d5;
+  --background: #faf0ca;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

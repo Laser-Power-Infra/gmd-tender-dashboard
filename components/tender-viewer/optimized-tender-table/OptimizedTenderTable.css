@@ -78,8 +78,8 @@
 }
 
 .record-count-badge {
-  background-color: var(--color-primary-light);
-  color: #38ef7d;
+  background-color: #faf0ca;
+  color: #723d46;
   padding: 4px 8px;
   border-radius: 20px;
   font-size: 11px;
@@ -216,7 +216,7 @@
 .optimized-tender-data-table td.sticky-column {
   position: sticky;
   z-index: 1;
-  left : 0px;
+  left: 0px;
   background-color: inherit;
 }
 
@@ -1044,7 +1044,9 @@
   font-family: inherit;
   font-weight: 400;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   box-sizing: border-box;
 }
 
@@ -1070,7 +1072,9 @@
   color: #64748b;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .column-picker-search-clear:hover {
@@ -1100,7 +1104,10 @@
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .column-picker-action-btn:hover {
