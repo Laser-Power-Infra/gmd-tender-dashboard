@@ -81,7 +81,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: Props) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md bg-white">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-[#0a2540]">
+          <DialogTitle className="flex items-center gap-2 text-brand">
             <KeyRound size={18} />
             Change Password
           </DialogTitle>
@@ -196,7 +196,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: Props) {
             <Button
               type="submit"
               disabled={isPending}
-              className="bg-[#0a2540] text-white hover:bg-[#0d2d4f]"
+              className="bg-brand text-white hover:bg-brand-accent"
             >
               {isPending ? (
                 <>

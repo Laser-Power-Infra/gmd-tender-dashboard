@@ -15,7 +15,7 @@ interface FlowNodeCardProps {
 
 /**
  * A single clickable funnel node. Keeps the project's established dark-surface
- * tokens: active is bg-blue-500/20 + border-blue-400/50, the same pair used by
+ * tokens: active is bg-brand/20 + border-brand-accent/50, the same pair used by
  * FilterSidebar person chips and the dark ParticipationCards variant.
  */
 export function FlowNodeCard({
@@ -31,7 +31,7 @@ export function FlowNodeCard({
   const isEmpty = count === 0;
 
   const surface = active
-    ? "bg-blue-500/20 border-blue-400/50"
+    ? "bg-brand/20 border-brand-accent/50"
     : "bg-white/10 border-white/10 hover:bg-white/20 hover:border-white/20";
 
   return (
@@ -48,7 +48,7 @@ export function FlowNodeCard({
       className={[
         "absolute flex rounded-lg border text-left transition-colors duration-150",
         "cursor-pointer focus-visible:outline-none focus-visible:ring-2",
-        "focus-visible:ring-blue-400 focus-visible:ring-offset-0",
+        "focus-visible:ring-brand-accent focus-visible:ring-offset-0",
         surface,
         isEmpty && !active ? "opacity-55" : "",
         mode === "rail"

@@ -101,7 +101,7 @@ export default function AnalyticsCards({
                 onClick={() => handleCardClick(card.value)}
                 className={`w-full flex items-center justify-between py-1.5 px-2.5 rounded-sm text-sm transition-colors cursor-pointer ${
                   active
-                    ? "bg-blue-50 border border-blue-300 shadow-sm"
+                    ? "bg-brand-light border border-brand-light shadow-sm"
                     : "bg-slate-50 border border-transparent hover:bg-slate-100"
                 }`}
               >
@@ -133,7 +133,7 @@ export default function AnalyticsCards({
                     }
                     className={`w-full flex items-center justify-between py-1.5 px-2.5 rounded-sm text-sm transition-colors cursor-pointer ${
                       isActive
-                        ? "bg-blue-50 border border-blue-300 shadow-sm"
+                        ? "bg-brand-light border border-brand-light shadow-sm"
                         : "bg-slate-50 border border-transparent hover:bg-slate-100"
                     }`}
                   >

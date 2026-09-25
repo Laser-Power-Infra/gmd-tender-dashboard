@@ -27,7 +27,7 @@ export default function FlowChartPreviewPage() {
     <div className="flex-1 overflow-auto bg-[#f4f6f8] p-6">
       <div className="mx-auto max-w-[1400px] space-y-5">
         <header className="space-y-1">
-          <h1 className="text-xl font-bold text-[#0a2540]">
+          <h1 className="text-xl font-bold text-brand">
             Participation Flow Chart — visual preview
           </h1>
           <p className="text-sm text-slate-600">
@@ -50,7 +50,7 @@ export default function FlowChartPreviewPage() {
                   onClick={() => setScenarioKey(s.key)}
                   className={`cursor-pointer rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${
                     s.key === scenarioKey
-                      ? "border-blue-300 bg-blue-50 text-blue-800 shadow-sm"
+                      ? "border-brand-light bg-brand-light text-brand shadow-sm"
                       : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
                   }`}
                 >
@@ -78,7 +78,7 @@ export default function FlowChartPreviewPage() {
                   onClick={() => setWidth(w)}
                   className={`cursor-pointer rounded-md border px-3 py-1.5 text-xs font-medium tabular-nums transition-colors ${
                     w === width
-                      ? "border-blue-300 bg-blue-50 text-blue-800 shadow-sm"
+                      ? "border-brand-light bg-brand-light text-brand shadow-sm"
                       : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
                   }`}
                 >
@@ -92,7 +92,7 @@ export default function FlowChartPreviewPage() {
                 step={10}
                 value={width}
                 onChange={(e) => setWidth(Number(e.target.value))}
-                className="ml-2 w-56 cursor-pointer accent-blue-600"
+                className="ml-2 w-56 cursor-pointer accent-brand"
               />
               <span className="text-xs font-semibold tabular-nums text-slate-700">
                 {width}px
@@ -116,10 +116,10 @@ export default function FlowChartPreviewPage() {
         <div className="flex flex-wrap items-start gap-5">
           {/* Live sidebar replica */}
           <div
-            className="shrink-0 rounded-lg border border-[#1e3d59] bg-[#0a2540] shadow-lg"
+            className="shrink-0 rounded-lg border border-brand bg-brand shadow-lg"
             style={{ width }}
           >
-            <div className="border-b border-[#1e3d59] px-5 py-4 text-[13px] font-bold uppercase tracking-[0.8px] text-white">
+            <div className="border-b border-brand px-5 py-4 text-[13px] font-bold uppercase tracking-[0.8px] text-white">
               Participation Filters
             </div>
             <div className="max-h-[78vh] overflow-y-auto px-5 py-4">
@@ -151,7 +151,7 @@ export default function FlowChartPreviewPage() {
                 {participationFilters.map((f) => (
                   <span
                     key={f}
-                    className="rounded-md bg-blue-50 px-2 py-1 font-mono text-[11px] text-blue-800"
+                    className="rounded-md bg-brand-light px-2 py-1 font-mono text-[11px] text-brand"
                   >
                     {f}
                   </span>

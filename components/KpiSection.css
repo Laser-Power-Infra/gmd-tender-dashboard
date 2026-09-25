@@ -53,12 +53,12 @@
 }
 
 /* Theme Variances based on metric type */
-.kpi-card.theme-blue::before { background-color: #1a73e8; }
+.kpi-card.theme-blue::before { background-color: var(--color-brand-accent); }
 .kpi-card.theme-green::before { background-color: #137333; }
 .kpi-card.theme-orange::before { background-color: #f5a623; }
 .kpi-card.theme-purple::before { background-color: #7b1fa2; }
 .kpi-card.theme-red::before { background-color: #c5221f; }
-.kpi-card.theme-gray::before { background-color: #0a2540; }
+.kpi-card.theme-gray::before { background-color: var(--color-brand); }
 
 /* Typographical hierarchy */
 .kpi-title {
@@ -74,7 +74,7 @@
 .kpi-value {
   font-size: 22px;
   font-weight: 800;
-  color: #0a2540;
+  color: var(--color-brand);
   margin: 0;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
@@ -100,4 +100,4 @@
 
 .kpi-trend.positive { color: #137333; }
 .kpi-trend.negative { color: #c5221f; }
-.kpi-trend.neutral { color: #1a73e8; }
+.kpi-trend.neutral { color: var(--color-brand-accent); }

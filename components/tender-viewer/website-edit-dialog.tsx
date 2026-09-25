@@ -81,7 +81,7 @@ export default function WebsiteEditDialog({
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
               placeholder="https://example.com"
-              className="mt-1 w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="mt-1 w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function WebsiteEditDialog({
           <button
             onClick={handleSave}
             disabled={isSaving || !website.trim()}
-            className="px-4 py-1.5 text-[13px] text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
+            className="px-4 py-1.5 text-[13px] text-white bg-brand rounded-md hover:bg-brand-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
           >
             {isSaving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             Save Website

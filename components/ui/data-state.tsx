@@ -13,8 +13,8 @@ import { AlertCircle, Inbox, RefreshCw } from "lucide-react";
 
 export function DataLoadingState({ label = "Loading..." }: { label?: string }) {
   return (
-    <div className="flex min-h-[500px] flex-1 flex-col items-center justify-center gap-4 text-[#0a2540]">
-      <span className="size-10 animate-spin rounded-full border-4 border-[#e1e6eb] border-t-[#1a73e8]" />
+    <div className="flex min-h-[500px] flex-1 flex-col items-center justify-center gap-4 text-brand">
+      <span className="size-10 animate-spin rounded-full border-4 border-[#e1e6eb] border-t-brand-accent" />
       <span className="text-[15px] font-bold tracking-[0.5px]">{label}</span>
     </div>
   );
@@ -40,7 +40,7 @@ export function DataErrorState({
         <button
           type="button"
           onClick={onRetry}
-          className="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-[#0a2540] px-4 py-2 font-semibold text-white transition-opacity hover:opacity-90"
+          className="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-brand px-4 py-2 font-semibold text-white transition-opacity hover:opacity-90"
         >
           <RefreshCw size={14} /> Retry
         </button>
@@ -74,7 +74,7 @@ export function RefreshingBar({ active }: { active: boolean }) {
       aria-label="Refreshing"
       className="pointer-events-none absolute inset-x-0 top-0 z-50 h-0.5 overflow-hidden bg-transparent"
     >
-      <div className="h-full w-1/3 animate-[dataStateSlide_1.1s_ease-in-out_infinite] rounded-full bg-[#1a73e8]" />
+      <div className="h-full w-1/3 animate-[dataStateSlide_1.1s_ease-in-out_infinite] rounded-full bg-brand-accent" />
       <style>{`@keyframes dataStateSlide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}`}</style>
     </div>
   );

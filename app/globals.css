@@ -60,8 +60,14 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@theme {
+  --color-brand: #6f1d1b;
+  --color-brand-light: #f5dcdc;
+  --color-brand-accent: #b71c1c;
+}
+
 :root {
-  --background: oklch(1 0 0);
+  --background: #fdf0d5;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -121,7 +127,7 @@
   --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: var(--color-brand);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);

@@ -18,7 +18,7 @@ type SeedRow = {
 // Hardcoded unique ids — 1..4 manual from user, 5.. for TenderMerged fields (small total)
 const SEED_ROWS: SeedRow[] = [
   { id: 1, columnName: "APM", description: "It is done as per instruction from Sambhu Chakraborty to Arpan Pal, as per discussion with PVG and AKG.", allocatedTo: "Arpan Pal", email: "sales@uicwires.com", source: "MANUAL", doneFromWhere: "-", isManual: true, dailyLogEnabled: true, dateEnabled: true },
-  { id: 2, columnName: "APS", description: "-", allocatedTo: "Sambhu Chakraborty", email: "sambhu@laserpowerinfra.com", source: "MANUAL", doneFromWhere: "-", isManual: true, dailyLogEnabled: true, dateEnabled: true },
+  { id: 2, columnName: "APS", description: "-", allocatedTo: "Sambhu Chakraborty", email: "sambhu@gmdalui.co.in", source: "MANUAL", doneFromWhere: "-", isManual: true, dailyLogEnabled: true, dateEnabled: true },
   { id: 3, columnName: "APP", description: "Based on logical formula.", allocatedTo: "Arpan Pal", email: "sales@uicwires.com", source: "MANUAL", doneFromWhere: "-", isManual: true, dailyLogEnabled: true, dateEnabled: true },
   { id: 4, columnName: "File Upload", description: "Uploading new tenders daily from T247 and Tender Tiger.", allocatedTo: "Arpan Pal", email: "sales@uicwires.com", source: "SCRAPE_247", doneFromWhere: "T247 Puppeteer bidplus.gem + Tender Tiger uploader + /api/upload + GoogleSheetService", isManual: false, dailyLogEnabled: false, dateEnabled: false },
   // TenderMerged representative sample — add remaining as needed with tail ids

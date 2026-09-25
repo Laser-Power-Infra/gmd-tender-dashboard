@@ -814,7 +814,7 @@ export default function CredentialsTable({
                                 flex: 1,
                                 padding: "6px 8px",
                                 borderRadius: "6px",
-                                border: "1px solid #0a2540",
+                                border: "1px solid var(--color-brand)",
                                 fontSize: "12px",
                               }}
                             />
@@ -826,7 +826,7 @@ export default function CredentialsTable({
                               style={{
                                 padding: "4px",
                                 borderRadius: "4px",
-                                background: "#0a2540",
+                                background: "var(--color-brand)",
                                 color: "white",
                                 border: "none",
                                 opacity: isSaving ? 0.5 : 1,

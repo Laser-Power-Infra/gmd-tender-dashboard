@@ -136,7 +136,7 @@ export default function ColumnMappingsPage() {
   if (loading) {
     return (
       <div style={{ padding: "24px" }}>
-        <h1 style={{ color: "#0a2540", marginBottom: "24px" }}>
+        <h1 style={{ color: "var(--color-brand)", marginBottom: "24px" }}>
           Column Mappings
         </h1>
         <p style={{ color: "#999" }}>Loading mappings...</p>
@@ -154,14 +154,14 @@ export default function ColumnMappingsPage() {
           marginBottom: "24px",
         }}
       >
-        <h1 style={{ color: "#0a2540", margin: 0, fontSize: "22px" }}>
+        <h1 style={{ color: "var(--color-brand)", margin: 0, fontSize: "22px" }}>
           Column Mappings
         </h1>
         <button
           onClick={() => openAddDialog()}
           style={{
             padding: "8px 16px",
-            background: "#0a2540",
+            background: "var(--color-brand)",
             color: "#fff",
             border: "none",
             borderRadius: "6px",
@@ -250,7 +250,7 @@ export default function ColumnMappingsPage() {
                       fontFamily: "monospace",
                       fontSize: "15px",
                       fontWeight: 600,
-                      color: "#0a2540",
+                      color: "var(--color-brand)",
                     }}
                   >
                     {group.dbField}
@@ -358,8 +358,8 @@ export default function ColumnMappingsPage() {
                   }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLElement;
-                    el.style.borderColor = "#0a2540";
-                    el.style.color = "#0a2540";
+                    el.style.borderColor = "var(--color-brand)";
+                    el.style.color = "var(--color-brand)";
                   }}
                   onMouseLeave={(e) => {
                     const el = e.currentTarget as HTMLElement;

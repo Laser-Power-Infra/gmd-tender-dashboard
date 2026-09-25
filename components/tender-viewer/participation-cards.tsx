@@ -492,14 +492,14 @@ export function ParticipationCards({
               aria-pressed={active}
               className={
                 isDark
-                  ? `flex w-full flex-col rounded-lg border px-3 py-2.5 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+                  ? `flex w-full flex-col rounded-lg border px-3 py-2.5 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent ${
                       active
-                        ? "bg-blue-500/20 border-blue-400/50"
+                        ? "bg-brand/20 border-brand-accent/50"
                         : "bg-white/10 border-white/20 hover:bg-white/20"
                     }`
-                  : `flex w-full flex-col rounded-sm border px-4 py-3 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${
+                  : `flex w-full flex-col rounded-sm border px-4 py-3 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light ${
                       active
-                        ? "bg-blue-50 border-blue-300 shadow-sm"
+                        ? "bg-brand-light border-brand-light shadow-sm"
                         : "bg-white border-slate-200 hover:border-slate-300"
                     }`
               }

@@ -8,7 +8,7 @@ const ROW_COUNT = 8;
 export default function DashboardSkeleton() {
   return (
     <div className="flex flex-col h-[calc(100vh-13rem)] bg-white border border-[#e1e6eb] rounded-lg shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 bg-[#0a2540] gap-4">
+      <div className="flex items-center justify-between px-4 py-3 bg-brand gap-4">
         <div className="flex items-center gap-3 flex-1">
           <Skeleton className="h-4 w-48 bg-white/15" />
           <Skeleton className="h-5 w-20 rounded-full bg-white/15" />

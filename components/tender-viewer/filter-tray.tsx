@@ -74,7 +74,7 @@ export default function FilterTray() {
                 onClick={() => dispatch(setTypeFilter(key))}
                 className={cn(
                   "text-xs capitalize",
-                  typeFilter === key && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                  typeFilter === key && "bg-brand-light text-brand hover:bg-brand-light",
                 )}
               >
                 {key === "all" ? "All" : key}
@@ -96,7 +96,7 @@ export default function FilterTray() {
                 onClick={() => dispatch(setExclusionFilter(exclusionFilter === key ? null : key))}
                 className={cn(
                   "text-xs capitalize",
-                  exclusionFilter === key && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                  exclusionFilter === key && "bg-brand-light text-brand hover:bg-brand-light",
                 )}
               >
                 {key === "both" ? "Both" : key}
@@ -118,7 +118,7 @@ export default function FilterTray() {
                 onClick={() => dispatch(setDeadlinePreset(deadlinePreset === preset ? null : preset))}
                 className={cn(
                   "text-xs",
-                  deadlinePreset === preset && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                  deadlinePreset === preset && "bg-brand-light text-brand hover:bg-brand-light",
                 )}
               >
                 {preset === "thisWeek" ? "This Week" : preset === "thisMonth" ? "This Month" : "This Year"}
@@ -131,7 +131,7 @@ export default function FilterTray() {
                 onClick={() => setShowDeadlinePopup((v) => !v)}
                 className={cn(
                   "text-xs",
-                  deadlineDateFrom && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                  deadlineDateFrom && "bg-brand-light text-brand hover:bg-brand-light",
                 )}
               >
                 <ListFilter className="size-3" />
@@ -192,7 +192,7 @@ export default function FilterTray() {
                 onClick={() => dispatch(setAiRelevanceFilter(key))}
                 className={cn(
                   "text-xs",
-                  aiRelevanceFilter === key && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                  aiRelevanceFilter === key && "bg-brand-light text-brand hover:bg-brand-light",
                 )}
               >
                 {key === "all" ? "All" : key === "yes" ? "Yes" : key === "no" ? "No" : "Not Analysed"}

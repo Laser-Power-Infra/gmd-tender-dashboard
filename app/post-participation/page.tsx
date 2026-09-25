@@ -77,7 +77,7 @@ export default function PostParticipation() {
       <div className="dashboard-workspace">
         <header className="dashboard-top-header">
           <div className="header-brand">
-            <h1 className="brand-logo-text">LASERPOWER <span>POST PARTICIPATION</span></h1>
+            <h1 className="brand-logo-text">G M DALUI <span>POST PARTICIPATION</span></h1>
             <div className="brand-divider"></div>
             <span className="brand-title">Post Participation Dashboard</span>
           </div>
@@ -94,8 +94,8 @@ export default function PostParticipation() {
         </header>
         <main className="dashboard-body">
           {loadingTenders || !tenderSliceData ? (
-            <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "#0a2540", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
-              <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "#1a73e8", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
+            <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "var(--color-brand)", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
+              <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "var(--color-brand-accent)", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
               <span style={{ fontSize: "16px", letterSpacing: "0.5px" }}>
                 Loading tender data{streamedCount > 0 ? ` (${streamedCount.toLocaleString()} rows)` : ""}...
               </span>
@@ -117,12 +117,12 @@ export default function PostParticipation() {
               <span>DATABASE LIVE (SYNC: ACTIVE)</span>
             </div>
           </div>
-          <div className="status-center">LASERPOWER LIVE GOOGLE SHEET PIPELINE ACTIVE</div>
+          <div className="status-center">G M DALUI LIVE GOOGLE SHEET PIPELINE ACTIVE</div>
           <div className="status-right">
             <a className="status-link">SYSTEM DOCUMENTATION</a>
             <span>•</span>
             <a className="status-link">AUDIT LOGS</a>
-            <span className="version-badge">LASERPOWER ERP V2.1 PRO</span>
+            <span className="version-badge">G M DALUI ERP V2.1 PRO</span>
           </div>
         </footer>
       </div>

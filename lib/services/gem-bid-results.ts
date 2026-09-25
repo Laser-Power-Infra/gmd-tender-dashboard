@@ -303,7 +303,7 @@ function calculateDifference(evaluations: EvaluationRow[]): string | null {
     (e) => e.rank?.toUpperCase() === "L1" || e.rank?.trim() === "1",
   );
   const targetRow = evaluations.find(
-    (e) => e.sellerName.toUpperCase().includes("LASER POWER & INFRA"),
+    (e) => e.sellerName.toUpperCase().includes("LASER POWER & INFRA") || e.sellerName.toUpperCase().includes("G M DALUI"),
   );
 
   if (!l1Row || !targetRow) return null;

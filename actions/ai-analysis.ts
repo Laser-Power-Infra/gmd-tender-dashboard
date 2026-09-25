@@ -32,58 +32,61 @@ type TenderAnalysisResult =
 
 const BASE_SYSTEM_PROMPT = `You are a Tender Evaluation Expert.
 
-Determine whether the following tender brief is specifically for the SUPPLY of any of the following products.
+Determine whether the following tender brief is specifically for the SUPPLY of valves or valve-related products, and rate how relevant it is.
 
 Eligible Products (ONLY these)
 
-Power Cables
+Valves
+- Sluice Valves / Gate Valves
+- Butterfly Valves
+- Air Valves (Kinetic Air Valves, Double Orifice Air Valves, Single Orifice Air Valves, Air Release Valves)
+- Non-Return Valves / Reflux Valves / Check Valves
+- Dual Plate Check Valves (DPCV)
+- Swing Check Valves
+- Ball Valves
+- Globe Valves
+- Plug Valves
+- Pressure Reducing Valves (PRV)
+- Pressure Relief Valves / Safety Valves
+- Zero Velocity Valves
+- Foot Valves
+- Knife Gate Valves
+- Diaphragm Valves
+- Pinch Valves
+- Control Valves
 
-LT Power Cables (Armoured or Unarmoured)
-MV Power Cables (Medium Voltage)
-Control Cables
-Signalling Cables
-Aerial Bunched (AB) Cables
-PVC Power Cables
-XLPE Power Cables
+Valve-Related Products
+- Dismantling Joints
+- Valve accessories, actuators, gearboxes and associated fittings, ONLY when supplied together with valves
 
-Conductors
-
-ACSR Conductors
-AAC Conductors
-AAAC Conductors
-AL-59 Conductors
-AL-7 Conductors
-ASTER Conductors
-HTLS (AECC/TS) Conductors
-Medium Voltage Covered Conductors (MVCC)
 Strict Inclusion Rules
-The tender must explicitly involve the supply, procurement, purchase, or delivery of one or more of the above products.
-If the tender is only for installation, erection, laying, stringing, testing, commissioning, maintenance, repair, replacement, O&M, turnkey/EPC works, consultancy, or services, answer NO, unless the tender explicitly includes the supply of one or more eligible products.
-If the products supplied are not from the above list, answer NO.
+1. The tender must explicitly involve the supply, procurement, purchase, or delivery of one or more of the above products.
+2. Do not decide from the tender title alone. Analyze the title, description, BOQ / item descriptions, technical specifications, scope of supply, and any available tender documents.
+3. Consider synonyms and technical terminology, not only exact keyword matches (e.g. "NRV", "reflux valve", "sluice gate valve", "kinetic air valve", "DPCV", "pressure reducing station" with PRVs supplied).
+4. If the products supplied are not from the list above, answer false.
+
+Relevance Levels
+- HIGH: valves or valve-related products are the main item of the tender.
+- MEDIUM: valves form a significant supplied part of a larger water supply, pipeline, pumping, irrigation, sewerage or other infrastructure tender (e.g. valves appear as substantial BOQ line items to be supplied).
+- NONE: the tender does not qualify (see exclusions).
+
 Explicit Exclusions
 
-Always answer NO if the tender is for any of the following:
+Always answer false (relevance "NONE") if:
+- Valves are mentioned only for repair, servicing, overhauling, AMC, manpower, or general maintenance.
+- The work is installation-only, erection-only, testing/commissioning-only, consultancy, or services, with no supply of valves included.
+- "Valve" appears only incidentally in specifications or general conditions and no valve procurement is required.
+- The tender is for a product not on the eligible list (e.g. pipes, pumps, meters, or fittings alone, with no eligible valves supplied).
 
-Flexible Cables
-Optical Fibre Cables (OFC), Fiber Optic Cables, ADSS, OPGW, FTTH or any telecom/communication fibre cables
-Elastomeric Cables or Rubber Cables
-Bare Copper Conductors
-Copper Wires
-House Wiring Cables
-Instrumentation Cables
-Welding Cables
-Solar Cables
-Coaxial Cables
-Ethernet/LAN/Data Cables
-Any cable or conductor not explicitly listed under the Eligible Products section
 Output Format
 
-Respond with a single JSON object containing exactly these two fields:
-- "valid": a boolean. true if the tender is specifically for the supply of eligible cables/conductors, false otherwise.
-- "reason": one concise sentence (plain text) explaining whether the tender is specifically for the supply of the eligible cables/conductors.
+Respond with a single JSON object containing exactly these three fields:
+- "valid": a boolean. true if the tender involves actual supply of eligible valves/valve-related products (HIGH or MEDIUM relevance), false otherwise.
+- "relevance": one of "HIGH", "MEDIUM", or "NONE".
+- "reason": one concise sentence (plain text) explaining the decision, naming the valve type(s) supplied where applicable.
 
 Do NOT use "ANSWER:", "REASON:", or any other labels/prefixes inside the "reason" value.
-Important: Set "valid" to true only when the tender clearly involves the supply/procurement of one or more eligible products listed above. In every other case, set "valid" to false.`;
+Important: Set "valid" to true only when the tender clearly involves the supply/procurement of one or more eligible products. In every other case, set "valid" to false and "relevance" to "NONE".`;
 
 export async function analyzeTenderValidity(
   tenderBrief: string,

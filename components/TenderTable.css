@@ -1,9 +1,9 @@
 /* TenderTable.css - Premium Vanilla CSS styling for the Master Tender Table */
 
 :root {
-  --color-primary: #0a2540;
-  --color-primary-light: #1e3d59;
-  --color-accent: #0070f3;
+  --color-primary: var(--color-brand);
+  --color-primary-light: var(--color-brand-accent);
+  --color-accent: var(--color-brand-accent);
   --color-bg-light: #f4f6f8;
   --color-bg-white: #ffffff;
   --color-border: #e1e6eb;
@@ -21,9 +21,9 @@
   --status-eval-text: #b06000;
   --status-eval-border: #ffe89e;
   
-  --status-sub-bg: #e8f0fe;
-  --status-sub-text: #1a73e8;
-  --status-sub-border: #d2e3fc;
+  --status-sub-bg: var(--color-brand-light);
+  --status-sub-text: var(--color-brand-accent);
+  --status-sub-border: var(--color-brand-light);
   
   --status-loi-bg: #e2f0d9;
   --status-loi-text: #385723;
@@ -468,16 +468,16 @@
   text-decoration: none;
   font-weight: 600;
   padding: 6px 12px;
-  background-color: #e8f0fe;
-  border: 1px solid #d2e3fc;
+  background-color: var(--color-brand-light);
+  border: 1px solid var(--color-brand-light);
   border-radius: 4px;
   transition: all 0.2s ease;
   width: fit-content;
 }
 
 .costing-attachment-link:hover {
-  background-color: #d2e3fc;
-  color: #0056b3;
+  background-color: var(--color-brand-light);
+  color: var(--color-brand);
   text-decoration: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -492,15 +492,15 @@
   font-weight: 600;
   font-size: 12px;
   padding: 4px 8px;
-  background-color: #e8f0fe;
-  border: 1px solid #d2e3fc;
+  background-color: var(--color-brand-light);
+  border: 1px solid var(--color-brand-light);
   border-radius: 4px;
   transition: all 0.2s ease;
 }
 
 .table-attachment-link:hover {
-  background-color: #d2e3fc;
-  color: #0056b3;
+  background-color: var(--color-brand-light);
+  color: var(--color-brand);
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
@@ -985,7 +985,7 @@
   background-color: #ffffff;
   border: 1px solid #dcdcdc;
   border-radius: 4px;
-  color: #0a2540;
+  color: var(--color-brand);
   font-size: 11px;
   font-family: inherit;
   font-weight: 500;
@@ -1000,7 +1000,7 @@
 }
 
 .multiselect-trigger-btn:focus {
-  border-color: #0070f3;
+  border-color: var(--color-brand-accent);
 }
 
 .multiselect-dropdown-panel {
@@ -1030,7 +1030,7 @@
 .multiselect-action-btn {
   background: none;
   border: none;
-  color: #0070f3;
+  color: var(--color-brand-accent);
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
@@ -1056,7 +1056,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #0a2540;
+  color: var(--color-brand);
   cursor: pointer;
   padding: 4px;
   border-radius: 3px;
@@ -1153,9 +1153,9 @@
 }
 
 .table-attachment-btn {
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
-  color: #2563eb;
+  background-color: var(--color-brand-light);
+  border: 1px solid var(--color-brand-light);
+  color: var(--color-brand-accent);
   padding: 4px 8px;
   font-size: 11px;
   font-weight: 600;
@@ -1168,9 +1168,9 @@
 }
 
 .table-attachment-btn:hover {
-  background-color: #2563eb;
+  background-color: var(--color-brand-accent);
   color: #ffffff;
-  border-color: #2563eb;
+  border-color: var(--color-brand-accent);
 }
 
 .cell-loading-shimmer {
@@ -1426,7 +1426,7 @@
   border-radius: 5px;
   outline: none;
   background: #fff;
-  color: #0a2540;
+  color: var(--color-brand);
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18);
   text-align: right;
   transition: box-shadow 0.15s ease;

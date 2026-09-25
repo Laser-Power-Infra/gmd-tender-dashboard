@@ -133,7 +133,7 @@ export default function ColumnIndexDialog({
               disabled={isEditing}
             >
               <SelectTrigger
-                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-400 disabled:bg-slate-50 disabled:text-slate-500 data-placeholder:text-slate-400"
+                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-accent disabled:bg-slate-50 disabled:text-slate-500 data-placeholder:text-slate-400"
               >
                 <SelectValue placeholder="Select a column..." />
               </SelectTrigger>
@@ -157,7 +157,7 @@ export default function ColumnIndexDialog({
               value={displayOrder}
               onChange={(e) => setDisplayOrder(e.target.value)}
               placeholder="e.g. 1, 2, 3..."
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
             <p className="text-[11px] text-slate-400 mt-1">
               If two columns have the same index, they are sorted by creation date.
@@ -173,7 +173,7 @@ export default function ColumnIndexDialog({
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="UI column header override"
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
 
@@ -183,7 +183,7 @@ export default function ColumnIndexDialog({
                 type="checkbox"
                 checked={visible}
                 onChange={(e) => setVisible(e.target.checked)}
-                className="accent-blue-600 w-4 h-4"
+                className="accent-brand w-4 h-4"
               />
               <span className="text-[13px] text-slate-700">Visible by default</span>
             </label>
@@ -207,7 +207,7 @@ export default function ColumnIndexDialog({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-1.5 text-[13px] text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
+            className="px-4 py-1.5 text-[13px] text-white bg-brand rounded-md hover:bg-brand-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
           >
             {saving ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />

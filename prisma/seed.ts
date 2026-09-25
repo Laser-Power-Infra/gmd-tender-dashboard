@@ -30,7 +30,7 @@ async function main() {
   const Associates = [
       {
         name: "Sandip Das",
-        email: "sandip.das@laserpowerinfra.com",
+        email: "sandip.das@gmdalui.co.in",
       },
       {
         name: "Salil Kumar Datta",
@@ -46,15 +46,15 @@ async function main() {
       },
       {
         name: "Pritha",
-        email: "sales@laserpowerinfra.com",
+        email: "sales@gmdalui.co.in",
       },
       {
         name: "Test User(AI TEAM)",
-        email: "bidyutdas.laserpowerinfra@gmail.com",
+        email: "bidyutdas.gmdalui@gmail.com",
       },
       {
         name: "Amarnath Manna",
-        email: "amanna@laserpowerinfra.com",
+        email: "amanna@gmdalui.co.in",
       },
       {
         name: "Ashik Mandal",
@@ -102,16 +102,16 @@ async function main() {
 
   const adminPassword = await bcrypt.hash("admin123", 10);
   await prisma.user.upsert({
-    where: { email: "admin@laserpower.in" },
+    where: { email: "admin@gmdalui.co.in" },
     update: {},
     create: {
       name: "Admin",
-      email: "admin@laserpower.in",
+      email: "admin@gmdalui.co.in",
       passwordHash: adminPassword,
       role: "admin",
     },
   });
-  console.log("✅ Admin user seeded (admin@laserpower.in / admin123).");
+  console.log("✅ Admin user seeded (admin@gmdalui.co.in / admin123).");
 
   console.log("✅ Seed completed.");
 }

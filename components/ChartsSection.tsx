@@ -93,9 +93,9 @@ const SvgBarChart: React.FC<{ data: MonthlyTrendItem[]; avgValue: number }> = ({
           const y = height - paddingBottom - barHeight;
           return (
             <g key={index}>
-              <rect className="chart-bar" x={x} y={y} width={barWidth} height={Math.max(barHeight, 2)} fill="#1e3d59" />
+              <rect className="chart-bar" x={x} y={y} width={barWidth} height={Math.max(barHeight, 2)} fill="var(--color-brand)" />
               {item.count > 0 && (
-                <text x={x + barWidth / 2} y={y - 4} textAnchor="middle" className="chart-axis-text" style={{ fill: "#0a2540", fontWeight: 700 }}>
+                <text x={x + barWidth / 2} y={y - 4} textAnchor="middle" className="chart-axis-text" style={{ fill: "var(--color-brand)", fontWeight: 700 }}>
                   {item.count}
                 </text>
               )}
@@ -151,8 +151,8 @@ const SvgAreaChart: React.FC<{ data: MonthlyTrendItem[] }> = ({ data }) => {
       <svg className="svg-chart" viewBox={`0 0 ${width} ${height}`}>
         <defs>
           <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1a73e8" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#1a73e8" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="var(--color-brand-accent)" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="var(--color-brand-accent)" stopOpacity="0.0" />
           </linearGradient>
         </defs>
         {[0, 0.25, 0.5, 0.75, 1].map((ratio, idx) => {
@@ -172,7 +172,7 @@ const SvgAreaChart: React.FC<{ data: MonthlyTrendItem[] }> = ({ data }) => {
           <g key={index}>
             <circle className="chart-line-dot" cx={pt.x} cy={pt.y} r="3.5" />
             {pt.value > 0 && (
-              <text x={pt.x} y={pt.y - 8} textAnchor="middle" className="chart-axis-text" style={{ fill: "#1a73e8", fontWeight: 700 }}>
+              <text x={pt.x} y={pt.y - 8} textAnchor="middle" className="chart-axis-text" style={{ fill: "var(--color-brand-accent)", fontWeight: 700 }}>
                 {formatCurrencyLabel(pt.value)}
               </text>
             )}

@@ -174,7 +174,7 @@ function RemarksCell({
         <button
           onClick={save}
           disabled={isSaving}
-          className="flex-shrink-0 mt-0.5 w-6 h-6 rounded flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+          className="flex-shrink-0 mt-0.5 w-6 h-6 rounded flex items-center justify-center bg-brand hover:bg-brand-accent text-white cursor-pointer"
           title="Save"
         >
           {isSaving ? (
@@ -193,7 +193,7 @@ function RemarksCell({
         {val || <span className="text-slate-300">-</span>}
       </div>
       <button
-        className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+        className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
         title="Edit Remarks"
         onClick={(e) => {
           e.stopPropagation();
@@ -216,7 +216,7 @@ function DivisionOrDepartmentCell({ value }: { value: unknown }) {
   if (!raw) return <span className="text-slate-300">-</span>;
   const key = raw.toUpperCase();
   const map: Record<string, string> = {
-    "LASER PROJECTS": "bg-blue-50 text-blue-700 border-blue-200",
+    "LASER PROJECTS": "bg-brand-light text-brand border-brand-light",
     "LASER MANUFACTURING": "bg-emerald-50 text-emerald-700 border-emerald-200",
   };
   const cls = map[key] ?? "bg-slate-100 text-slate-600 border-slate-200";
@@ -242,7 +242,7 @@ const AgentReportCell = memo(function AgentReportCell({
         e.stopPropagation();
         onOpen(raw);
       }}
-      className="rounded-md bg-blue-50 border-2 border-blue-500 text-blue-600 px-3 py-1.5 text-xs font-medium hover:bg-blue-500 hover:text-white transition-colors cursor-pointer"
+      className="rounded-md bg-brand-light border-2 border-brand text-brand px-3 py-1.5 text-xs font-medium hover:bg-brand-accent hover:text-white transition-colors cursor-pointer"
     >
       Show Agent Report
     </button>
@@ -1077,7 +1077,7 @@ export default function Dashboard() {
                   </div>
                   {!hasFeedback && (
                     <button
-                      className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+                      className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
                       title="Provide Feedback"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1286,7 +1286,7 @@ export default function Dashboard() {
             RATE_LIMITED:
               "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-50",
             PROCESSING:
-              "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50",
+              "bg-brand-light text-brand border-brand-light hover:bg-brand-light",
           };
           return {
             header: "Parse Status",
@@ -1418,7 +1418,7 @@ export default function Dashboard() {
                       <span className="text-slate-300">-</span>
                     )}
                     <button
-                      className="opacity-0 group-hover/cell:opacity-100 transition-all w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer shrink-0"
+                      className="opacity-0 group-hover/cell:opacity-100 transition-all w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer shrink-0"
                       title="Upload Tender Document"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1544,7 +1544,7 @@ export default function Dashboard() {
                             }
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 underline hover:text-blue-800 text-xs"
+                            className="text-brand underline hover:text-brand text-xs"
                             onClick={(e) => e.stopPropagation()}
                           >
                             {url}
@@ -1556,7 +1556,7 @@ export default function Dashboard() {
                     )}
                   </div>
                   <button
-                    className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+                    className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
                     title="Edit Website"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -1671,7 +1671,7 @@ export default function Dashboard() {
                   badge = {
                     label: "PRE",
                     className:
-                      "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50",
+                      "bg-brand-light text-brand border-brand-light hover:bg-brand-light",
                   };
                 }
               }
@@ -1718,7 +1718,7 @@ export default function Dashboard() {
                 <Badge
                   className={`text-[10px] font-medium ${
                     isGem
-                      ? "bg-blue-100 text-blue-800 border-blue-200"
+                      ? "bg-brand-light text-brand border-brand-light"
                       : "bg-slate-100 text-slate-600 border-slate-200"
                   }`}
                 >

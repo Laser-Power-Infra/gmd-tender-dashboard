@@ -118,7 +118,7 @@ export default function Home() {
       <div className="dashboard-workspace">
         <header className="dashboard-top-header">
           <div className="header-brand">
-            <h1 className="brand-logo-text">LASERPOWER <span>PARTICIPATION</span></h1>
+            <h1 className="brand-logo-text">G M DALUI <span>PARTICIPATION</span></h1>
             <div className="brand-divider"></div>
             <span className="brand-title">Executive Tender Dashboard</span>
           </div>
@@ -154,8 +154,8 @@ export default function Home() {
             </TabsList>
             <TabsContent value="pre-participation" className="mt-2 flex-1 overflow-hidden data-[state=active]:flex data-[state=active]:flex-col h-[calc(100vh-144px)]">
               {loadingTenders || !tenderSliceData ? (
-                <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "#0a2540", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
-                  <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "#1a73e8", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
+                <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "var(--color-brand)", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
+                  <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "var(--color-brand-accent)", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
                   <span style={{ fontSize: "16px", letterSpacing: "0.5px" }}>
                     Loading tender data{streamedCount > 0 ? ` (${streamedCount.toLocaleString()} rows)` : ""}...
                   </span>
@@ -178,7 +178,7 @@ export default function Home() {
                       value="erpPartyName"
                       checked={partySearchField === "erpPartyName"}
                       onChange={() => setPartySearchField("erpPartyName")}
-                      className="size-4 accent-[#0a2540]"
+                      className="size-4 accent-brand"
                     />
                     Utility
                   </label>
@@ -189,7 +189,7 @@ export default function Home() {
                       value="itemCode"
                       checked={partySearchField === "itemCode"}
                       onChange={() => setPartySearchField("itemCode")}
-                      className="size-4 accent-[#0a2540]"
+                      className="size-4 accent-brand"
                     />
                     Item Code
                   </label>
@@ -257,12 +257,12 @@ export default function Home() {
               <span>DATABASE LIVE (SYNC: ACTIVE)</span>
             </div>
           </div>
-          <div className="status-center">LASERPOWER LIVE GOOGLE SHEET PIPELINE ACTIVE</div>
+          <div className="status-center">G M DALUI LIVE GOOGLE SHEET PIPELINE ACTIVE</div>
           <div className="status-right">
             <a className="status-link">SYSTEM DOCUMENTATION</a>
             <span>•</span>
             <a className="status-link">AUDIT LOGS</a>
-            <span className="version-badge">LASERPOWER ERP V2.1 PRO</span>
+            <span className="version-badge">G M DALUI ERP V2.1 PRO</span>
           </div>
         </footer>
       </div>

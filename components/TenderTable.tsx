@@ -118,7 +118,7 @@ const fetchDocketFiles = (docketNo: string): Promise<any[]> => {
   // console.log(`[DEBUG fetchDocketFiles] FETCHING for ${docketNo}`);
   const promise = fetch(`/api/executive-tenders/${docketNo}/files`, {
     headers: {
-      Authorization: "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE",
+      Authorization: "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE",
     },
   })
     .then((res) => {
@@ -262,7 +262,7 @@ const BOQChartCell: React.FC<{
   if (!effectiveFileId) return null;
 
   const handleDownload = () => {
-    const token = "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE";
+    const token = "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE";
     window.open(
       `/api/executive-files/download/${effectiveFileId}?auth=${encodeURIComponent(token)}`,
       "_blank",
@@ -291,7 +291,7 @@ const getRaCostingFile = (tenderFilesJson?: string) => {
 
 const buildRaCostingHref = (raFile: { source?: string; url?: string } | null): string => {
   if (!raFile) return "";
-  const token = "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE";
+  const token = "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE";
   if (raFile.source && raFile.source !== "SHEET_SYNC") {
     return `/api/executive-files/view/${raFile.source}?auth=${encodeURIComponent(token)}`;
   }
@@ -3080,13 +3080,13 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                       style={{
                         fontSize: 10,
                         fontWeight: 600,
-                        color: "#0070f3",
+                        color: "var(--color-brand-accent)",
                         textTransform: "none",
                         letterSpacing: 0,
-                        background: "#e8f0fe",
+                        background: "var(--color-brand-light)",
                         padding: "2px 6px",
                         borderRadius: 10,
-                        border: "1px solid #d2e3fc",
+                        border: "1px solid var(--color-brand-light)",
                       }}
                     >
                       {baseVisibleColumns.filter((c) => columnVisibility[c.accessor] !== false).length}/{baseVisibleColumns.length}
@@ -3216,7 +3216,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                             borderRadius: 4,
                             cursor: "pointer",
                             fontSize: 12,
-                            color: "#0a2540",
+                            color: "var(--color-brand)",
                           }}
                         >
                           <input
@@ -3228,7 +3228,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                 [col.accessor]: !(prev[col.accessor] ?? true),
                               }))
                             }
-                            style={{ width: 14, height: 14, accentColor: "#0070f3" }}
+                            style={{ width: 14, height: 14, accentColor: "var(--color-brand-accent)" }}
                           />
                           {col.header}
                         </label>
@@ -3978,7 +3978,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                 </span>
                                 {col.accessor === "docketNo" && rowIdx === 0 && group.records.length > 0 && (
                                   <button
-                                    className="flex-shrink-0 h-6 px-2 rounded flex items-center gap-1 border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-medium transition-colors"
+                                    className="flex-shrink-0 h-6 px-2 rounded flex items-center gap-1 border border-brand-light bg-brand-light hover:bg-brand-light text-brand text-[11px] font-medium transition-colors"
                                     title={`View tender details (${group.records.length} record${group.records.length !== 1 ? "s" : ""})`}
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -4011,7 +4011,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                 {consignees && <span className="text-[11px] text-slate-500">{consignees}</span>}
                               </div>
                               <button
-                                className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+                                className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
                                 title="Edit Office Name @ Consignees"
                                 onClick={(e) => { e.stopPropagation(); setOfficeDialogRecord(record); }}
                               >
@@ -4038,7 +4038,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                         href={url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-blue-600 underline hover:text-blue-800 text-xs"
+                                        className="text-brand underline hover:text-brand text-xs"
                                         onClick={(e) => e.stopPropagation()}
                                       >
                                         {url}
@@ -4050,7 +4050,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                 )}
                               </div>
                               <button
-                                className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+                                className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
                                 title="Edit Website"
                                 onClick={(e) => { e.stopPropagation(); setWebsiteDialogRecord(record); }}
                               >
@@ -4135,10 +4135,10 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                     {tt.itemCode} -{" "}
                                     {tt.testCertificateUrl ? (
                                       <a
-                                        href={`/api/executive-files/view/${tt.testCertificateUrl}?auth=${encodeURIComponent("Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE")}`}
+                                        href={`/api/executive-files/view/${tt.testCertificateUrl}?auth=${encodeURIComponent("Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE")}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        style={{ color: "#1a73e8", textDecoration: "underline" }}
+                                        style={{ color: "var(--color-brand-accent)", textDecoration: "underline" }}
                                         onClick={(e) => e.stopPropagation()}
                                       >
                                         {tt.testCertificateNo}
@@ -4627,7 +4627,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                             cellContent = url ? (
                               <a
                                 href={url.startsWith('/api/')
-                                  ? `${url}?auth=${encodeURIComponent("Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE")}`
+                                  ? `${url}?auth=${encodeURIComponent("Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE")}`
                                   : url}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -4696,7 +4696,7 @@ export const TenderTable: React.FC<TenderTableProps> = ({
                                   )) : <span className="text-slate-300">-</span>}
                                 </div>
                                 <button
-                                  className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-1 shadow-sm cursor-pointer"
+                                  className="opacity-0 group-hover/cell:opacity-100 transition-all absolute top-0 right-0 w-8 h-8 rounded-full flex items-center justify-center bg-brand hover:bg-brand-accent p-1 shadow-sm cursor-pointer"
                                   title="Edit Reporting Officers"
                                   onClick={(e) => { e.stopPropagation(); setReportingDialogRecord(record); }}
                                 >

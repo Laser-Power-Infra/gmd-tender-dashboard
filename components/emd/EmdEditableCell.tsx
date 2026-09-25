@@ -73,7 +73,7 @@ export const EmdEditableCell = memo(function EmdEditableCell({
               style={{
                 padding: "6px",
                 borderRadius: "4px",
-                background: "#0a2540",
+                background: "var(--color-brand)",
                 color: "white",
                 border: "none",
                 opacity: hasInvalidDraft ? 0.5 : 1,

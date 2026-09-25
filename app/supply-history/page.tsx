@@ -920,7 +920,7 @@ const SupplyHistoryDashboard: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE",
+          Authorization: "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE",
         },
       });
       const json = await res.json();
@@ -953,7 +953,7 @@ const SupplyHistoryDashboard: React.FC = () => {
     try {
       const res = await fetch("/api/supply-history/download-documents-zip", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE" },
+        headers: { "Content-Type": "application/json", Authorization: "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE" },
         body: JSON.stringify({ saleBillNumbers: billNumbers }),
       });
 
@@ -1020,7 +1020,7 @@ const SupplyHistoryDashboard: React.FC = () => {
     try {
       const res = await fetch("/api/supply-history/download-documents-zip", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE" },
+        headers: { "Content-Type": "application/json", Authorization: "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE" },
         body: JSON.stringify({ saleBillNumbers: billNumbers }),
       })
 
@@ -1151,7 +1151,7 @@ const SupplyHistoryDashboard: React.FC = () => {
       <div className="supply-workspace">
         <header className="supply-top-header">
           <div className="supply-header-brand">
-            <h1 className="supply-header-title">LASERPOWER <span>SUPPLY</span></h1>
+            <h1 className="supply-header-title">G M DALUI <span>SUPPLY</span></h1>
             <div className="supply-header-divider" />
             <span className="supply-header-subtitle">Supply History Dashboard</span>
           </div>
@@ -1782,7 +1782,7 @@ const SupplyHistoryDashboard: React.FC = () => {
                                     placeholder="Item Schedule"
                                     style={{ fontSize: "12px", padding: "2px 6px", border: "1px solid #dadce0", borderRadius: 4, width: 140 }}
                                   />
-                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#1a73e8", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
+                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"var(--color-brand-accent)", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
                                   <button onClick={handleEditCancel} disabled={isSaving} title="Cancel" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#e8eaed", color:"#5f6368", border:"none", cursor:"pointer" }}><X size={12} /></button>
                                 </div>
                               );
@@ -1855,7 +1855,7 @@ const SupplyHistoryDashboard: React.FC = () => {
                                     title="Separate multiple emails with comma"
                                     style={{ fontSize: "12px", padding: "2px 6px", border: "1px solid #dadce0", borderRadius: 4, width: 160 }}
                                   />
-                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#1a73e8", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
+                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"var(--color-brand-accent)", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
                                   <button onClick={handleEditCancel} disabled={isSaving} title="Cancel" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#e8eaed", color:"#5f6368", border:"none", cursor:"pointer" }}><X size={12} /></button>
                                 </div>
                               );
@@ -1886,7 +1886,7 @@ const SupplyHistoryDashboard: React.FC = () => {
                                     placeholder="Contact No"
                                     style={{ fontSize: "12px", padding: "2px 6px", border: "1px solid #dadce0", borderRadius: 4, width: 120 }}
                                   />
-                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#1a73e8", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
+                                  <button onClick={handleEditSave} disabled={isSaving} title="Save" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"var(--color-brand-accent)", color:"#fff", border:"none", cursor:"pointer" }}><Check size={12} /></button>
                                   <button onClick={handleEditCancel} disabled={isSaving} title="Cancel" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:22, height:22, borderRadius:"50%", background:"#e8eaed", color:"#5f6368", border:"none", cursor:"pointer" }}><X size={12} /></button>
                                 </div>
                               );
@@ -2038,12 +2038,12 @@ const SupplyHistoryDashboard: React.FC = () => {
               <span>SHEET LIVE</span>
             </div>
           </div>
-          <div style={{ color: "#0a2540", textTransform: "uppercase", fontWeight: 700 }}>
-            LASERPOWER SUPPLY PIPELINE
+          <div style={{ color: "var(--color-brand)", textTransform: "uppercase", fontWeight: 700 }}>
+            G M DALUI SUPPLY PIPELINE
           </div>
           <div style={{ display: "flex", gap: 12 }}>
-            <span style={{ backgroundColor: "#e1e6eb", color: "#0a2540", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
-              LASERPOWER ERP V2.1 PRO
+            <span style={{ backgroundColor: "#e1e6eb", color: "var(--color-brand)", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
+              G M DALUI ERP V2.1 PRO
             </span>
           </div>
         </footer>

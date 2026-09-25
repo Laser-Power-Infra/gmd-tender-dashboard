@@ -565,8 +565,8 @@ export default function EmdDetailsBgPage() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "#0a2540", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
-        <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "#1a73e8", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
+      <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", minHeight: "500px", color: "var(--color-brand)", fontWeight: 700, flexDirection: "column", gap: "15px" }}>
+        <div style={{ width: "40px", height: "40px", border: "4px solid #e1e6eb", borderTopColor: "var(--color-brand-accent)", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
         <span style={{ fontSize: "16px", letterSpacing: "0.5px" }}>Loading EMD Details BG...</span>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -577,7 +577,7 @@ export default function EmdDetailsBgPage() {
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "400px", gap: "12px" }}>
         <p style={{ color: "#c5221f", fontWeight: 600 }}>Failed to load EMD Details BG: {error.message}</p>
-        <button onClick={refresh} style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "#0a2540", color: "white", borderRadius: "6px", fontWeight: 600 }}>
+        <button onClick={refresh} style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "var(--color-brand)", color: "white", borderRadius: "6px", fontWeight: 600 }}>
           <RefreshCw size={14} /> Retry
         </button>
       </div>
@@ -743,7 +743,7 @@ export default function EmdDetailsBgPage() {
                                     onClick={() => handleSendEmail(row)}
                                     disabled={!hasReason || isSending}
                                     title={!hasReason ? "Select Tender Conclusion Reason first" : "Send email"}
-                                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: hasReason ? "#0a2540" : "#cbd5e1", color: "white", borderRadius: "6px", fontWeight: 600, fontSize: "12px", border: "none", cursor: hasReason ? "pointer" : "not-allowed", opacity: isSending ? 0.7 : 1 }}
+                                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: hasReason ? "var(--color-brand)" : "#cbd5e1", color: "white", borderRadius: "6px", fontWeight: 600, fontSize: "12px", border: "none", cursor: hasReason ? "pointer" : "not-allowed", opacity: isSending ? 0.7 : 1 }}
                                   >
                                     {isSending ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />} {isSending ? "Sending..." : "Send Email"}
                                   </button>
@@ -785,7 +785,7 @@ export default function EmdDetailsBgPage() {
                                         style={{ flex: 1, padding: "6px 8px", borderRadius: "6px", border: `1px solid ${draftContactEmail && !isValidEmail(draftContactEmail) ? "#ef4444" : "#dadce0"}`, fontSize: "12px", resize: "vertical", minHeight: "56px" }}
                                       />
                                       <div className="flex flex-col gap-1">
-                                        <button onClick={() => handleContactEmailSave(row.id)} disabled={isUpdating || (draftContactEmail.trim() !== "" && !isValidEmail(draftContactEmail))} title="Save" style={{ padding: "6px", borderRadius: "4px", background: "#0a2540", color: "white", border: "none" }}><Check size={12} /></button>
+                                        <button onClick={() => handleContactEmailSave(row.id)} disabled={isUpdating || (draftContactEmail.trim() !== "" && !isValidEmail(draftContactEmail))} title="Save" style={{ padding: "6px", borderRadius: "4px", background: "var(--color-brand)", color: "white", border: "none" }}><Check size={12} /></button>
                                         <button onClick={handleContactEmailCancel} disabled={isUpdating} title="Cancel" style={{ padding: "6px", borderRadius: "4px", background: "#e5e7eb", border: "none" }}><X size={12} /></button>
                                       </div>
                                     </div>
@@ -827,7 +827,7 @@ export default function EmdDetailsBgPage() {
                                         style={{ flex: 1, padding: "6px 8px", borderRadius: "6px", border: "1px solid #dadce0", fontSize: "12px", resize: "vertical", minHeight: "56px" }}
                                       />
                                       <div className="flex flex-col gap-1">
-                                        <button onClick={() => handleContactNoSave(row.id)} disabled={isUpdating} title="Save" style={{ padding: "6px", borderRadius: "4px", background: "#0a2540", color: "white", border: "none" }}><Check size={12} /></button>
+                                        <button onClick={() => handleContactNoSave(row.id)} disabled={isUpdating} title="Save" style={{ padding: "6px", borderRadius: "4px", background: "var(--color-brand)", color: "white", border: "none" }}><Check size={12} /></button>
                                         <button onClick={handleContactNoCancel} disabled={isUpdating} title="Cancel" style={{ padding: "6px", borderRadius: "4px", background: "#e5e7eb", border: "none" }}><X size={12} /></button>
                                       </div>
                                     </div>

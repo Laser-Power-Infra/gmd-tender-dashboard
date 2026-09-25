@@ -54,7 +54,7 @@
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #0a2540;
+  color: var(--color-brand);
   letter-spacing: 0.8px;
   margin: 0;
 }
@@ -80,7 +80,7 @@
 
 /* Bar Chart Styles */
 .chart-bar {
-  fill: #1a73e8;
+  fill: var(--color-brand-accent);
   rx: 3px;
   ry: 3px;
   cursor: pointer;
@@ -116,7 +116,7 @@
 }
 
 .chart-line-path {
-  stroke: #1a73e8;
+  stroke: var(--color-brand-accent);
   stroke-width: 3;
   fill: none;
   stroke-linecap: round;
@@ -125,7 +125,7 @@
 
 .chart-line-dot {
   fill: #ffffff;
-  stroke: #1a73e8;
+  stroke: var(--color-brand-accent);
   stroke-width: 2.5;
   cursor: pointer;
   transition: r 0.15s ease, fill 0.15s ease;
@@ -133,7 +133,7 @@
 
 .chart-line-dot:hover {
   r: 6;
-  fill: #0070f3;
+  fill: var(--color-brand-accent);
 }
 
 .chart-avg-line {
@@ -185,7 +185,7 @@
 .donut-center-text-val {
   font-size: 16px;
   font-weight: 800;
-  fill: #0a2540;
+  fill: var(--color-brand);
 }
 
 /* Chart Legends */
@@ -223,7 +223,7 @@
 
 .legend-value {
   font-weight: 700;
-  color: #0a2540;
+  color: var(--color-brand);
   font-variant-numeric: tabular-nums;
 }
 
@@ -261,7 +261,7 @@
 }
 
 .client-bar-fill {
-  background: linear-gradient(90deg, #1e3d59, #17b978);
+  background: linear-gradient(90deg, var(--color-brand), #17b978);
   height: 100%;
   border-radius: 10px;
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -274,7 +274,7 @@
 .client-value-label {
   font-size: 12px;
   font-weight: 700;
-  color: #0a2540;
+  color: var(--color-brand);
   width: 80px;
   text-align: right;
   font-variant-numeric: tabular-nums;

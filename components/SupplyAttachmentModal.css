@@ -123,9 +123,9 @@
   padding: 1px 6px;
   font-size: 10px;
   font-weight: 600;
-  color: #2563eb;
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
+  color: var(--color-brand-accent);
+  background-color: var(--color-brand-light);
+  border: 1px solid var(--color-brand-light);
   border-radius: 4px;
   vertical-align: middle;
 }
@@ -149,13 +149,13 @@
 }
 
 .view-btn {
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
-  color: #2563eb;
+  background-color: var(--color-brand-light);
+  border: 1px solid var(--color-brand-light);
+  color: var(--color-brand-accent);
 }
 
 .view-btn:hover {
-  background-color: #dbeafe;
+  background-color: var(--color-brand-light);
 }
 
 .download-btn {

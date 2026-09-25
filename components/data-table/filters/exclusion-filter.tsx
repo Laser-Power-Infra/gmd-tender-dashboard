@@ -32,7 +32,7 @@ export function ExclusionFilter({
           onClick={() => onChange(value === opt.key ? null : opt.key)}
           className={cn(
             "text-xs capitalize",
-            value === opt.key && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+            value === opt.key && "bg-brand-light text-brand hover:bg-brand-light",
           )}
         >
           {opt.label}

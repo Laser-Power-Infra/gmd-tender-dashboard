@@ -205,9 +205,9 @@ export function SopTable({ rows, dailyLogs, selectedDate, onToggle, isAuthentica
         <>
           <div style={{position:"fixed", inset:0, zIndex:40}} onClick={()=>setShowPicker(false)} />
           <div style={{position:"absolute", right:16, marginTop:4, width:280, background:"#fff", border:"1px solid #cbd5e1", borderRadius:6, boxShadow:"0 10px 15px rgba(0,0,0,0.1)", zIndex:50, padding:12}}>
-            <div className="flex justify-between items-center mb-2"><span className="text-xs font-semibold">Columns {visibleColumns.length}/{columns.length}</span><button className="text-xs text-blue-600" onClick={()=>setShowPicker(false)}><X size={12}/></button></div>
+            <div className="flex justify-between items-center mb-2"><span className="text-xs font-semibold">Columns {visibleColumns.length}/{columns.length}</span><button className="text-xs text-brand" onClick={()=>setShowPicker(false)}><X size={12}/></button></div>
             <input value={pickerSearch} onChange={e=>setPickerSearch(e.target.value)} placeholder="Search..." className="w-full px-2 py-1 text-xs border border-gray-200 rounded mb-2" />
-            <div className="flex gap-2 mb-2"><button className="text-xs text-blue-600" onClick={()=>setColumnVisibility({})}>Select All</button><button className="text-xs text-blue-600" onClick={()=>{const m:Record<string,boolean>={}; columns.forEach(c=> m[String(c.accessor)]=false); // keep at least one
+            <div className="flex gap-2 mb-2"><button className="text-xs text-brand" onClick={()=>setColumnVisibility({})}>Select All</button><button className="text-xs text-brand" onClick={()=>{const m:Record<string,boolean>={}; columns.forEach(c=> m[String(c.accessor)]=false); // keep at least one
               const first=String(columns[0].accessor); delete m[first]; setColumnVisibility(m);}}>Clear</button></div>
             <div style={{maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:4}}>
               {columns.filter(c=> !pickerSearch || c.header.toLowerCase().includes(pickerSearch.toLowerCase())).map(c=>{
@@ -297,16 +297,16 @@ export function SopTable({ rows, dailyLogs, selectedDate, onToggle, isAuthentica
                     const w = columnWidths[key] ?? col.defaultWidth;
                     return (
                       <td key={key} className={col.sticky?"sticky-col":undefined} style={col.sticky?{left: stickyOffsets[key]}:{}}>
-                        {col.accessor==="columnName" && <span className="font-semibold text-[#0a2540]">{r.columnName}</span>}
+                        {col.accessor==="columnName" && <span className="font-semibold text-brand">{r.columnName}</span>}
                         {col.accessor==="description" && <div className="cell-scroll-wrap" title={r.description||""}>{r.description||"-"}</div>}
                         {col.accessor==="doneFromWhere" && <div className="cell-scroll-wrap">{r.doneFromWhere||"-"}</div>}
                         {col.accessor==="source" && <span className={`status-badge ${r.source==="MANUAL"?"submitted": r.source==="AI"?"eval":""}`}>{r.source||"-"}</span>}
                         {col.accessor==="isManual" && <span>{r.isManual? "Yes":"No"}</span>}
                         {col.accessor==="allocatedTo" && <span>{r.allocatedTo||"-"}</span>}
-                        {col.accessor==="email" && (r.email? <a href={`mailto:${r.email}`} className="text-[#0a2540] underline text-xs">{r.email}</a> : <span>-</span>)}
+                        {col.accessor==="email" && (r.email? <a href={`mailto:${r.email}`} className="text-brand underline text-xs">{r.email}</a> : <span>-</span>)}
                         {col.accessor==="dailyLogCheck" && (
                           <label className="inline-flex items-center justify-center w-full">
-                            <input type="checkbox" checked={isChecked} disabled={!isAuthenticated || togglingId===r.id || !r.dailyLogEnabled} onChange={()=>onToggle(r.id, isChecked)} className="h-4 w-4 rounded border-gray-300 text-[#0a2540] disabled:opacity-30" />
+                            <input type="checkbox" checked={isChecked} disabled={!isAuthenticated || togglingId===r.id || !r.dailyLogEnabled} onChange={()=>onToggle(r.id, isChecked)} className="h-4 w-4 rounded border-gray-300 text-brand disabled:opacity-30" />
                           </label>
                         )}
                         {col.accessor==="dailyLogEnabled" && <span>{r.dailyLogEnabled? "Yes":"No"}</span>}

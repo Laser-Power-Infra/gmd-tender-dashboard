@@ -58,7 +58,7 @@ export const SupplyAttachmentModal: React.FC<SupplyAttachmentModalProps> = ({
   onClose,
   saleBillNumber,
   attachmentUrl,
-  authToken = "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE",
+  authToken = "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE",
 }) => {
   const [localFiles, setLocalFiles] = useState<FileRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

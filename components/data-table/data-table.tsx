@@ -309,8 +309,8 @@ export function DataTable<TData>({
                       key={header.id}
                       colSpan={header.colSpan}
                       className={cn(
-                        "bg-[#0f2847] h-10 text-white text-[11px] font-semibold overflow-hidden uppercase tracking-wider",
-                        "px-3 py-2 text-left border-b border-r border-[#1a3a63] last:border-r-0",
+                        "bg-brand h-10 text-white text-[11px] font-semibold overflow-hidden uppercase tracking-wider",
+                        "px-3 py-2 text-left border-b border-r border-brand last:border-r-0",
                         "truncate relative group",
                         header.column.getCanSort() &&
                           "cursor-pointer select-none",

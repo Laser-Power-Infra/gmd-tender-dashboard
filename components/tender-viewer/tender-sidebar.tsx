@@ -163,7 +163,7 @@ export default function TenderSidebar({
 
   return (
     <>
-      <aside className="w-65 min-w-65 bg-linear-to-b from-[#0a2540] to-[#0d2f4f] flex flex-col overflow-y-auto shrink-0">
+      <aside className="w-65 min-w-65 bg-linear-to-b from-brand to-brand flex flex-col overflow-y-auto shrink-0">
         <div className="px-5 py-4.5 pb-3.5 flex items-center gap-2 border-b border-white/10">
           <div className="flex items-center justify-center w-6 h-6 rounded-sm bg-white/10">
             <FileText size={14} className="text-white/80" />
@@ -279,7 +279,7 @@ export default function TenderSidebar({
                 onClick={() => handleAnalyticsCardClick("aiYes")}
                 className={`w-full rounded-lg p-3 text-left transition-colors cursor-pointer ${
                   analyticsFilter === "aiYes"
-                    ? "bg-blue-500/20 border border-blue-400/50"
+                    ? "bg-brand/20 border border-brand-accent/50"
                     : "bg-white/10 border border-transparent hover:bg-white/20"
                 }`}
               >
@@ -295,7 +295,7 @@ export default function TenderSidebar({
                 onClick={() => handleAnalyticsCardClick("aiYesUnallocated")}
                 className={`w-full rounded-lg p-3 text-left transition-colors cursor-pointer ${
                   analyticsFilter === "aiYesUnallocated"
-                    ? "bg-blue-500/20 border border-blue-400/50"
+                    ? "bg-brand/20 border border-brand-accent/50"
                     : "bg-white/10 border border-transparent hover:bg-white/20"
                 }`}
               >
@@ -311,7 +311,7 @@ export default function TenderSidebar({
                 onClick={() => handleAnalyticsCardClick("apmYesAllocated")}
                 className={`w-full rounded-lg p-3 text-left transition-colors cursor-pointer ${
                   analyticsFilter === "apmYesAllocated"
-                    ? "bg-blue-500/20 border border-blue-400/50"
+                    ? "bg-brand/20 border border-brand-accent/50"
                     : "bg-white/10 border border-transparent hover:bg-white/20"
                 }`}
               >
@@ -327,14 +327,14 @@ export default function TenderSidebar({
                 onClick={() => handleAnalyticsCardClick("apmYesUnallocated")}
                 className={`w-full rounded-lg p-3 text-left transition-colors cursor-pointer ${
                   analyticsFilter === "apmYesUnallocated"
-                    ? "bg-blue-500/20 border border-blue-400/50"
+                    ? "bg-brand/20 border border-brand-accent/50"
                     : "bg-white/10 border border-transparent hover:bg-white/20"
                 }`}
               >
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1">
                   APM Yes (Unallocated)
                 </div>
-                <div className="text-xl font-bold text-blue-500 leading-tight">
+                <div className="text-xl font-bold text-brand-light leading-tight">
                   {analytics.apmYesUnallocated}
                 </div>
               </button>
@@ -357,7 +357,7 @@ export default function TenderSidebar({
                           }
                           className={`w-full flex items-center justify-between py-1.5 px-2.5 rounded-lg transition-colors cursor-pointer ${
                             isActive
-                              ? "bg-blue-500/20 border border-blue-400/50"
+                              ? "bg-brand/20 border border-brand-accent/50"
                               : "bg-white/10 border border-transparent hover:bg-white/20"
                           }`}
                         >

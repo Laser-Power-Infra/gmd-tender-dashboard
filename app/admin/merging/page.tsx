@@ -114,7 +114,7 @@ export default function ColumnMergingPage() {
   if (loading) {
     return (
       <div style={{ padding: "24px" }}>
-        <h1 style={{ color: "#0a2540", marginBottom: "24px" }}>
+        <h1 style={{ color: "var(--color-brand)", marginBottom: "24px" }}>
           Column Merging
         </h1>
         <p style={{ color: "#999" }}>Loading merged columns...</p>
@@ -132,7 +132,7 @@ export default function ColumnMergingPage() {
           marginBottom: "16px",
         }}
       >
-        <h1 style={{ color: "#0a2540", margin: 0, fontSize: "22px" }}>
+        <h1 style={{ color: "var(--color-brand)", margin: 0, fontSize: "22px" }}>
           Column Merging
         </h1>
         <button
@@ -142,7 +142,7 @@ export default function ColumnMergingPage() {
           }}
           style={{
             padding: "8px 16px",
-            background: "#0a2540",
+            background: "var(--color-brand)",
             color: "#fff",
             border: "none",
             borderRadius: "6px",
@@ -201,7 +201,7 @@ export default function ColumnMergingPage() {
                     style={{
                       fontSize: "14px",
                       fontWeight: 600,
-                      color: "#0a2540",
+                      color: "var(--color-brand)",
                     }}
                   >
                     {group.label}

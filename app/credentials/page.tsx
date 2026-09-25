@@ -113,7 +113,7 @@ export default function CredentialsPage() {
       {showAdd && (
         <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.4)" }} onClick={() => setShowAdd(false)}>
           <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: "8px", padding: "24px", width: "720px", maxWidth: "95vw", maxHeight: "90vh", overflowY: "auto" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", color: "#0a2540" }}>Add Credential</h3>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", color: "var(--color-brand)" }}>Add Credential</h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
               {["category", "states", "websites", "password", "mobileNo", "profilePassword", "dscName", "dscPassword", "otherRef"].map((k) => (
                 <div key={k} style={{ display: "flex", flexDirection: "column", gap: "4px", gridColumn: k === "otherRef" || k === "websites" ? "span 2" : "span 1" }}>
@@ -167,7 +167,7 @@ export default function CredentialsPage() {
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "20px" }}>
               <button onClick={() => setShowAdd(false)} disabled={creating} style={{ padding: "8px 16px", borderRadius: "6px", border: "1px solid #cbd5e1", background: "#fff" }}>Cancel</button>
-              <button onClick={handleAdd} disabled={creating} style={{ padding: "8px 16px", borderRadius: "6px", border: "none", background: "#0a2540", color: "#fff", fontWeight: 600, opacity: creating ? 0.6 : 1 }}>{creating ? "Saving..." : "Save"}</button>
+              <button onClick={handleAdd} disabled={creating} style={{ padding: "8px 16px", borderRadius: "6px", border: "none", background: "var(--color-brand)", color: "#fff", fontWeight: 600, opacity: creating ? 0.6 : 1 }}>{creating ? "Saving..." : "Save"}</button>
             </div>
           </div>
         </div>

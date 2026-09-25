@@ -633,7 +633,7 @@ export const TenderDashboardPage: React.FC = () => {
         {/* Header */}
         <header className="tender-top-header">
           <div className="tender-header-brand">
-            <h1 className="tender-header-title">LASERPOWER <span>TENDER</span></h1>
+            <h1 className="tender-header-title">G M DALUI <span>TENDER</span></h1>
             <div className="tender-header-divider" />
             <span className="tender-header-subtitle">Smartsheet Dashboard</span>
           </div>
@@ -1107,7 +1107,7 @@ export const TenderDashboardPage: React.FC = () => {
                               {row.partyName ?? <span className="smartsheet-null-cell">—</span>}
                             </td>
                             {/* Docket Number */}
-                            <td style={{ fontFamily: "monospace", fontWeight: 600, color: "#0a2540" }}>
+                            <td style={{ fontFamily: "monospace", fontWeight: 600, color: "var(--color-brand)" }}>
                               {row.docketNumber ?? <span className="smartsheet-null-cell">—</span>}
                             </td>
                             {/* Utility */}
@@ -1181,7 +1181,7 @@ export const TenderDashboardPage: React.FC = () => {
                                     window.open(row.attachmentUrl!, "_blank");
                                   }}
                                   title="View Costing Sheet"
-                                  style={{ padding: "4px 8px", background: "#e8f0fe", color: "#1a73e8", border: "1px solid #d2e3fc", borderRadius: "4px", fontSize: "11px", fontWeight: 600, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                                  style={{ padding: "4px 8px", background: "var(--color-brand-light)", color: "var(--color-brand-accent)", border: "1px solid var(--color-brand-light)", borderRadius: "4px", fontSize: "11px", fontWeight: 600, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
                                 >
                                   <Paperclip size={14} /> Costing
                                 </button>
@@ -1277,12 +1277,12 @@ export const TenderDashboardPage: React.FC = () => {
               <span>SMARTSHEET LIVE</span>
             </div>
           </div>
-          <div style={{ color: "#0a2540", textTransform: "uppercase", fontWeight: 700 }}>
-            LASERPOWER TENDER SMARTSHEET PIPELINE
+          <div style={{ color: "var(--color-brand)", textTransform: "uppercase", fontWeight: 700 }}>
+            G M DALUI TENDER SMARTSHEET PIPELINE
           </div>
           <div style={{ display: "flex", gap: 12 }}>
-            <span style={{ backgroundColor: "#e1e6eb", color: "#0a2540", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
-              LASERPOWER ERP V2.1 PRO
+            <span style={{ backgroundColor: "#e1e6eb", color: "var(--color-brand)", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
+              G M DALUI ERP V2.1 PRO
             </span>
           </div>
         </footer>

@@ -29,7 +29,7 @@ export const AttachmentModal: React.FC<AttachmentModalProps> = ({
   isOpen,
   onClose,
   files,
-  authToken = "Bearer MOCK_TOKEN_LASERPOWER_SECURE_AUTH_SCOPE",
+  authToken = "Bearer MOCK_TOKEN_GMDALUI_SECURE_AUTH_SCOPE",
 }) => {
   if (!isOpen) return null;
 

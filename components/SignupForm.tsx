@@ -52,7 +52,7 @@ export default function SignupForm() {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
       <div className="mb-6 text-center">
-        <h1 className="text-xl font-bold text-[#0a2540]">LASERPOWER</h1>
+        <h1 className="text-xl font-bold text-brand">G M DALUI</h1>
         <p className="mt-1 text-sm text-gray-500">Create your account</p>
       </div>
 
@@ -65,7 +65,7 @@ export default function SignupForm() {
             id="name"
             name="name"
             type="text"
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             placeholder="Your name"
           />
         </div>
@@ -79,7 +79,7 @@ export default function SignupForm() {
             name="email"
             type="email"
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             placeholder="you@example.com"
           />
         </div>
@@ -94,7 +94,7 @@ export default function SignupForm() {
             type="password"
             required
             minLength={6}
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             placeholder="At least 6 characters"
           />
         </div>
@@ -108,7 +108,7 @@ export default function SignupForm() {
             name="confirm"
             type="password"
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             placeholder="Repeat your password"
           />
         </div>
@@ -122,7 +122,7 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={loading}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#0a2540] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0d2d4f] disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             "Creating account..."
@@ -137,7 +137,7 @@ export default function SignupForm() {
 
       <p className="mt-6 text-center text-sm text-gray-500">
         Already have an account?{" "}
-        <Link href="/auth/login" className="font-semibold text-[#0a2540] hover:underline">
+        <Link href="/auth/login" className="font-semibold text-brand hover:underline">
           Sign In
         </Link>
       </p>

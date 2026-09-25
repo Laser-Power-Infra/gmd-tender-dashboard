@@ -241,12 +241,12 @@ export default function ConflictDetailsDialog({
                       <th
                         key={`${label}-${idx}`}
                         className={`text-left px-4 py-2.5 text-xs font-semibold text-slate-600 border-b border-slate-200 ${
-                          isTarget ? "bg-blue-50" : ""
+                          isTarget ? "bg-brand-light" : ""
                         }`}
                       >
                         <div className="flex items-center gap-1.5">
                           {isTarget && (
-                            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-blue-600 text-white">
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-brand text-white">
                               Target
                             </span>
                           )}
@@ -288,7 +288,7 @@ export default function ConflictDetailsDialog({
                           <td
                             key={`${field}-${idx}`}
                             className={`px-4 py-2.5 text-[13px] ${
-                              isTarget ? "bg-blue-50" : ""
+                              isTarget ? "bg-brand-light" : ""
                             }`}
                           >
                             {isEmpty ? (
@@ -305,8 +305,8 @@ export default function ConflictDetailsDialog({
                                   }
                                   className={`shrink-0 mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors ${
                                     isSelected
-                                      ? "bg-blue-600 border-blue-600 text-white"
-                                      : "bg-white border-slate-300 text-slate-400 hover:border-blue-400 hover:text-blue-400"
+                                      ? "bg-brand border-brand text-white"
+                                      : "bg-white border-slate-300 text-slate-400 hover:border-brand-accent hover:text-brand-accent"
                                   }`}
                                 >
                                   {isSelected ? (
@@ -318,7 +318,7 @@ export default function ConflictDetailsDialog({
                                 <span
                                   className={`whitespace-pre-wrap break-words ${
                                     isSelected
-                                      ? "text-blue-900 font-medium"
+                                      ? "text-brand font-medium"
                                       : "bg-amber-50 text-amber-900 font-medium"
                                   }`}
                                 >
@@ -331,7 +331,7 @@ export default function ConflictDetailsDialog({
                       })}
                       <td className="px-4 py-2.5 text-[13px] whitespace-pre-wrap break-words text-slate-700">
                         {mergedValue !== "" ? (
-                          <span className="inline-block bg-blue-50 text-blue-900 font-medium px-2 py-0.5 rounded">
+                          <span className="inline-block bg-brand-light text-brand font-medium px-2 py-0.5 rounded">
                             {mergedValue}
                           </span>
                         ) : (
@@ -380,7 +380,7 @@ export default function ConflictDetailsDialog({
             <button
               onClick={handleMerge}
               disabled={!canMerge}
-              className="px-4 py-1.5 text-[13px] text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
+              className="px-4 py-1.5 text-[13px] text-white bg-brand rounded-md hover:bg-brand-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
             >
               {saving ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

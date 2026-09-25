@@ -143,7 +143,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                         onClick={() => onAssociationFilterChange?.(isActive ? null : String(p.id))}
                         className={`w-full flex items-center justify-between py-2 px-2.5 rounded-lg transition-colors cursor-pointer border text-left ${
                           isActive
-                            ? "bg-blue-500/20 border-blue-400/50"
+                            ? "bg-brand/20 border-brand-accent/50"
                             : "bg-white/10 border-white/10 hover:bg-white/20"
                         }`}
                       >

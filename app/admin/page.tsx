@@ -26,7 +26,7 @@ export default function AdminPage() {
 
   return (
     <div style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1 style={{ color: "#0a2540", marginBottom: "24px" }}>Admin Panel</h1>
+      <h1 style={{ color: "var(--color-brand)", marginBottom: "24px" }}>Admin Panel</h1>
 
       <div style={{ display: "flex", gap: "16px", marginBottom: "24px", flexWrap: "wrap" }}>
         <Link href="/admin/mappings" style={{ textDecoration: "none", flex: "1", minWidth: "200px" }}>
@@ -43,9 +43,9 @@ export default function AdminPage() {
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
           >
-            <Columns size={24} style={{ color: "#0a2540" }} />
+            <Columns size={24} style={{ color: "var(--color-brand)" }} />
             <div>
-              <div style={{ fontWeight: 600, color: "#0a2540", fontSize: "14px" }}>Column Mappings</div>
+              <div style={{ fontWeight: 600, color: "var(--color-brand)", fontSize: "14px" }}>Column Mappings</div>
               <div style={{ color: "#888", fontSize: "12px" }}>Map Excel headers to DB fields</div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function AdminPage() {
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
           >
-            <ListOrdered size={24} style={{ color: "#0a2540" }} />
+            <ListOrdered size={24} style={{ color: "var(--color-brand)" }} />
             <div>
-              <div style={{ fontWeight: 600, color: "#0a2540", fontSize: "14px" }}>Column Order</div>
+              <div style={{ fontWeight: 600, color: "var(--color-brand)", fontSize: "14px" }}>Column Order</div>
               <div style={{ color: "#888", fontSize: "12px" }}>Reorder & configure columns</div>
             </div>
           </div>
@@ -85,9 +85,9 @@ export default function AdminPage() {
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
           >
-            <GitMerge size={24} style={{ color: "#0a2540" }} />
+            <GitMerge size={24} style={{ color: "var(--color-brand)" }} />
             <div>
-              <div style={{ fontWeight: 600, color: "#0a2540", fontSize: "14px" }}>Column Merging</div>
+              <div style={{ fontWeight: 600, color: "var(--color-brand)", fontSize: "14px" }}>Column Merging</div>
               <div style={{ color: "#888", fontSize: "12px" }}>Merge multiple fields into one</div>
             </div>
           </div>
@@ -106,9 +106,9 @@ export default function AdminPage() {
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
           >
-            <ClipboardList size={24} style={{ color: "#0a2540" }} />
+            <ClipboardList size={24} style={{ color: "var(--color-brand)" }} />
             <div>
-              <div style={{ fontWeight: 600, color: "#0a2540", fontSize: "14px" }}>SOP Responsibilities</div>
+              <div style={{ fontWeight: 600, color: "var(--color-brand)", fontSize: "14px" }}>SOP Responsibilities</div>
               <div style={{ color: "#888", fontSize: "12px" }}>Manage SOP columns & daily logs</div>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function AdminPage() {
             disabled={syncing}
             style={{
               padding: "10px 24px",
-              background: syncing ? "#999" : "#0a2540",
+              background: syncing ? "#999" : "var(--color-brand)",
               color: "#fff",
               border: "none",
               borderRadius: "6px",

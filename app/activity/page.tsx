@@ -121,8 +121,8 @@ export default function ActivityPage() {
     <div className="flex flex-1 flex-col p-6 gap-4" style={{ paddingTop: "12px" }}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <History className="size-5 text-[#0a2540]" />
-          <h1 className="text-xl font-bold text-[#0a2540]">Activity Log</h1>
+          <History className="size-5 text-brand" />
+          <h1 className="text-xl font-bold text-brand">Activity Log</h1>
           <span className="text-sm text-gray-500">
             {total > 0 ? `${total} record${total !== 1 ? "s" : ""}` : ""}
           </span>
@@ -150,7 +150,7 @@ export default function ActivityPage() {
             onClick={() => handleTableFilter("")}
             className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
               tableFilter === ""
-                ? "bg-[#0a2540] text-white"
+                ? "bg-brand text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
@@ -162,7 +162,7 @@ export default function ActivityPage() {
               onClick={() => handleTableFilter(t)}
               className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
                 tableFilter === t
-                  ? "bg-[#0a2540] text-white"
+                  ? "bg-brand text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >

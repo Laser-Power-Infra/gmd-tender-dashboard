@@ -63,19 +63,19 @@ export default function SopPage() {
   };
 
   if(loading){
-    return <div className="flex flex-1 flex-col p-6 gap-4" style={{paddingTop:"12px"}}><div className="flex items-center gap-2"><FileText className="size-5 text-[#0a2540]"/><h1 className="text-xl font-bold text-[#0a2540]">SOP</h1></div><p className="text-sm text-gray-500">Loading SOP...</p></div>
+    return <div className="flex flex-1 flex-col p-6 gap-4" style={{paddingTop:"12px"}}><div className="flex items-center gap-2"><FileText className="size-5 text-brand"/><h1 className="text-xl font-bold text-brand">SOP</h1></div><p className="text-sm text-gray-500">Loading SOP...</p></div>
   }
 
   return (
     <div className="flex flex-1 flex-col p-6 gap-4 min-h-0" style={{paddingTop:"12px", height:"calc(100vh - 42px)", display:"flex"}}>
       <div className="flex items-center gap-2 shrink-0">
-        <FileText className="size-5 text-[#0a2540]"/><h1 className="text-xl font-bold text-[#0a2540]">SOP</h1>
+        <FileText className="size-5 text-brand"/><h1 className="text-xl font-bold text-brand">SOP</h1>
         <span className="text-xs text-gray-500">Roles & Responsibilities — Column Name | Description | Done From Where | Source | Manual? | Allocated | Daily Log (IST)</span>
       </div>
 
       <div className="flex items-center gap-2 text-xs shrink-0">
         <span className="flex items-center gap-1 text-gray-600"><Calendar size={14}/> IST Date:</span>
-        <input type="date" value={selectedDate} onChange={e=>setSelectedDate(e.target.value)} className="border border-gray-200 rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#0a2540]" />
+        <input type="date" value={selectedDate} onChange={e=>setSelectedDate(e.target.value)} className="border border-gray-200 rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-brand" />
         {!isAuthenticated && <span className="text-amber-600 ml-2">Sign in to tick daily logs</span>}
       </div>
 

@@ -155,7 +155,7 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
               value={columnName}
               onChange={(e) => setColumnName(e.target.value)}
               placeholder="e.g. Tender Uploading"
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
           <div>
@@ -165,7 +165,7 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description of SOP"
               rows={2}
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -175,7 +175,7 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
                 value={allocatedTo}
                 onChange={(e) => setAllocatedTo(e.target.value)}
                 placeholder="e.g. Arpan Pal"
-                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
               />
             </div>
             <div>
@@ -184,7 +184,7 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. sales@uicwires.com"
-                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
               />
             </div>
           </div>
@@ -195,13 +195,13 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
               onChange={(e) => setDailyLog(e.target.value)}
               placeholder="Daily log note (optional)"
               rows={2}
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="text-slate-500 text-[11px] block mb-1">SOURCE</label>
-              <select value={source} onChange={(e)=>{const v=e.target.value; setSource(v); if(["AI","DOCUMENT_PARSE","RA_AUTOMATION","SCRAPE_247"].includes(v)){ setDailyLogEnabled(false); setDateEnabled(false);} }} className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-400">
+              <select value={source} onChange={(e)=>{const v=e.target.value; setSource(v); if(["AI","DOCUMENT_PARSE","RA_AUTOMATION","SCRAPE_247"].includes(v)){ setDailyLogEnabled(false); setDateEnabled(false);} }} className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-accent">
                 <option value="">Select source</option>
                 {SOURCE_OPTIONS.map(o=><option key={o} value={o}>{o}</option>)}
               </select>
@@ -212,13 +212,13 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-accent"
               />
             </div>
           </div>
           <div>
             <label className="text-slate-500 text-[11px] block mb-1">DONE FROM WHERE</label>
-            <input value={doneFromWhere} onChange={(e)=>setDoneFromWhere(e.target.value)} placeholder="e.g. Excel upload / Manual via TenderTable" className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+            <input value={doneFromWhere} onChange={(e)=>setDoneFromWhere(e.target.value)} placeholder="e.g. Excel upload / Manual via TenderTable" className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <label className="flex items-center gap-2 text-xs text-slate-700"><input type="checkbox" checked={isManual} onChange={(e)=>setIsManual(e.target.checked)} /> Manual?</label>
@@ -234,7 +234,7 @@ export default function SopResponsibilityDialog({ open, onClose, onSave, initial
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-1.5 text-[13px] text-white bg-[#0a2540] rounded-md hover:bg-[#163d66] disabled:opacity-50 flex items-center gap-1.5"
+            className="px-4 py-1.5 text-[13px] text-white bg-brand rounded-md hover:bg-brand-accent disabled:opacity-50 flex items-center gap-1.5"
           >
             {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
             {isEditing ? "Update" : "Create"}

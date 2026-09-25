@@ -113,7 +113,7 @@ export default function ColumnIndicesPage() {
   if (loading) {
     return (
       <div style={{ padding: "24px" }}>
-        <h1 style={{ color: "#0a2540", marginBottom: "24px" }}>
+        <h1 style={{ color: "var(--color-brand)", marginBottom: "24px" }}>
           Column Index
         </h1>
         <p style={{ color: "#999" }}>Loading column indices...</p>
@@ -131,7 +131,7 @@ export default function ColumnIndicesPage() {
           marginBottom: "16px",
         }}
       >
-        <h1 style={{ color: "#0a2540", margin: 0, fontSize: "22px" }}>
+        <h1 style={{ color: "var(--color-brand)", margin: 0, fontSize: "22px" }}>
           Column Index
         </h1>
         <button
@@ -141,7 +141,7 @@ export default function ColumnIndicesPage() {
           }}
           style={{
             padding: "8px 16px",
-            background: "#0a2540",
+            background: "var(--color-brand)",
             color: "#fff",
             border: "none",
             borderRadius: "6px",
@@ -252,7 +252,7 @@ export default function ColumnIndicesPage() {
                 style={{
                   fontFamily: "monospace",
                   fontSize: "12px",
-                  color: "#0a2540",
+                  color: "var(--color-brand)",
                 }}
               >
                 {item.columnName}

@@ -17,21 +17,21 @@ import {
 
 const links: Array<{ href: string; label: string; isExternal?: boolean }> = [
   { href: "/tenders", label: "Tenders" },
-  { href: "/", label: "Pre Participation" },
-  { href: "/post-participation", label: "Post Participation" },
-  {
-    href: "/not-participated",
-    label: "Not Participated",
-  },
-  { href: "/supply-history", label: "Supply History Dashboard" },
-  { href: "/railways", label: "Railways" },
-  { href: "/items", label: "Master Item List" },
-  { href: "/emd", label: "EMD Merged" },
+  // { href: "/", label: "Pre Participation" },
+  // { href: "/post-participation", label: "Post Participation" },
+  // {
+  //   href: "/not-participated",
+  //   label: "Not Participated",
+  // },
+  // { href: "/supply-history", label: "Supply History Dashboard" },
+  // { href: "/railways", label: "Railways" },
+  // { href: "/items", label: "Master Item List" },
+  // { href: "/emd", label: "EMD Merged" },
   // { href: "/emd-details-cash", label: "EMD Cash" },
   // { href: "/emd-details-bg", label: "EMD BG" },
-  { href: "/credentials", label: "Links and Password" },
-  { href: "/activity", label: "Activity" },
-  { href: "/sop", label: "SOP" },
+  // { href: "/credentials", label: "Links and Password" },
+  // { href: "/activity", label: "Activity" },
+  // { href: "/sop", label: "SOP" },
   // { href: "/merge-conflict", label: "Merge Conflict" },
 ];
 
@@ -57,7 +57,7 @@ function UserAvatar({
     .slice(0, 2);
 
   return (
-    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0a2540] text-xs font-bold text-white">
+    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-bold text-white">
       {initials}
     </div>
   );
@@ -90,9 +90,9 @@ export function NavBar() {
                       )
                     }
                     className={cn(
-                      "px-3 py-1.5 rounded text-sm font-semibold transition-colors hover:bg-[#0a2540] hover:text-white",
+                      "px-3 py-1.5 rounded text-sm font-semibold transition-colors hover:bg-brand-accent hover:text-white",
                       isActive
-                        ? "bg-[#0a2540] text-white data-active:bg-[#0a2540] data-active:text-white"
+                        ? "bg-brand text-white data-active:bg-brand data-active:text-white"
                         : "text-gray-700 data-active:bg-transparent data-active:text-gray-700",
                     )}
                   >
@@ -106,9 +106,9 @@ export function NavBar() {
                 <div className="group inline-flex">
                   <button
                     className={cn(
-                      "px-3 py-1.5 rounded text-sm font-semibold transition-colors inline-flex items-center gap-1 hover:bg-[#0a2540] hover:text-white",
+                      "px-3 py-1.5 rounded text-sm font-semibold transition-colors inline-flex items-center gap-1 hover:bg-brand-accent hover:text-white",
                       isAdminActive
-                        ? "bg-[#0a2540] text-white"
+                        ? "bg-brand text-white"
                         : "text-gray-700",
                     )}
                   >
@@ -124,7 +124,7 @@ export function NavBar() {
                           className={cn(
                             "block px-4 py-2 text-sm transition-colors hover:bg-gray-100",
                             isActive
-                              ? "bg-gray-50 font-semibold text-[#0a2540]"
+                              ? "bg-gray-50 font-semibold text-brand"
                               : "text-gray-700",
                           )}
                         >
@@ -191,7 +191,7 @@ export function NavBar() {
                 </Link>
                 <button
                   onClick={() => signIn()}
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0a2540] transition-colors hover:bg-gray-100"
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-brand transition-colors hover:bg-gray-100"
                 >
                   <LogIn size={14} />
                   Sign In

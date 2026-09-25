@@ -73,7 +73,7 @@
 .pulse-dot {
   width: 12px;
   height: 12px;
-  background-color: #2563eb;
+  background-color: var(--color-brand-accent);
   border-radius: 50%;
   animation: pulse 1.2s infinite ease-in-out;
 }

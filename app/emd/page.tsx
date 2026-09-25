@@ -1266,7 +1266,7 @@ export default function EmdMergedPage() {
                                     gap: "6px",
                                     padding: "6px 12px",
                                     background: hasReason
-                                      ? "#0a2540"
+                                      ? "var(--color-brand)"
                                       : "#cbd5e1",
                                     color: "white",
                                     borderRadius: "6px",

@@ -50,7 +50,7 @@ export function buildEmdMailData(row: EmdDetailsBgRecord): EMD_MAIL_TYPE & { to:
     bgAmount,
     bgValidityDate,
     tenderOutcome: row.reason || "-",
-    companyName: "Laser Power & Infra Limited",
+    companyName: "G M Dalui & Sons Pvt. Ltd.",
     date: format(new Date(), "dd-MM-yyyy"),
     to,
     subject,
@@ -164,7 +164,7 @@ export function EmdBgEmailDialog({ open, onOpenChange, row, onConfirm }: Props) 
 
         <SheetFooter className="border-t px-6 py-3 flex-row justify-end gap-2 flex-shrink-0 bg-slate-50">
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={sending}>Cancel</Button>
-          <Button onClick={handleConfirm} disabled={sending || !to || !isValidEmails(to) || !subject || !row.reason} className="bg-[#0a2540] text-white">
+          <Button onClick={handleConfirm} disabled={sending || !to || !isValidEmails(to) || !subject || !row.reason} className="bg-brand text-white">
             {sending ? <><Loader2 size={14} className="animate-spin" /> Sending...</> : <><Mail size={14} /> Confirm & Send</>}
           </Button>
         </SheetFooter>

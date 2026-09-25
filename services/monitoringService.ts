@@ -4,7 +4,7 @@ import type { UnmatchedTender, FolderMatch, FolderMatchResult } from "@/types/in
 
 const CONFIG = {
   reportsDir: path.resolve(process.cwd(), "data", "reports"),
-  alertEmailRecipient: process.env.MONITOR_ALERT_EMAIL || "tender-alerts@laserpower.co.in"
+  alertEmailRecipient: process.env.MONITOR_ALERT_EMAIL || "tender-alerts@gmdalui.co.in"
 };
 
 function ensureReportsDir(): void {
@@ -64,7 +64,7 @@ export async function generateDailyReport(): Promise<string> {
     <html lang="en">
     <head>
       <meta charset="UTF-8">
-      <title>Laserpower Folder Discrepancy Report - ${dateStr}</title>
+      <title>G M DALUI Folder Discrepancy Report - ${dateStr}</title>
       <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 30px; color: #334155; }
         h2 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }

@@ -1548,7 +1548,7 @@ function OptimizedTenderTableInner<T extends Record<string, unknown>>({
                         {col.provenance.map((badge) => {
                           const badgeClass =
                             badge === "PRE"
-                              ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50"
+                              ? "bg-brand-light text-brand border-brand-light hover:bg-brand-light"
                               : badge === "POST"
                                 ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50"
                                 : "bg-rose-100 text-rose-800 border-rose-300 hover:bg-rose-100";

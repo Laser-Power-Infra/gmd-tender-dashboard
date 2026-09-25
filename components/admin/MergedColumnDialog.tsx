@@ -121,7 +121,7 @@ export default function MergedColumnDialog({
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder="e.g. Organization@Department Name"
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function MergedColumnDialog({
               value={separator}
               onChange={(e) => setSeparator(e.target.value)}
               placeholder=" @ "
-              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+              className="w-full border border-slate-200 rounded-md px-3 py-2 text-[13px] text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-1 focus:ring-brand-accent"
             />
           </div>
 
@@ -209,7 +209,7 @@ export default function MergedColumnDialog({
                     type="checkbox"
                     checked={selectedFields.has(field)}
                     onChange={() => toggleField(field)}
-                    className="accent-blue-600"
+                    className="accent-brand"
                   />
                   {field}
                 </label>
@@ -232,7 +232,7 @@ export default function MergedColumnDialog({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-1.5 text-[13px] text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
+            className="px-4 py-1.5 text-[13px] text-white bg-brand rounded-md hover:bg-brand-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5"
           >
             {saving ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
