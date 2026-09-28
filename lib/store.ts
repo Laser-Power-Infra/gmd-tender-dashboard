@@ -9,6 +9,7 @@ import emdReducer from "@/lib/slices/emdSlice";
 import railwaysReducer from "@/lib/slices/railwaysSlice";
 import itemsReducer from "@/lib/slices/itemsSlice";
 import tenderPageReducer from "@/lib/slices/tenderPageSlice";
+import contractReviewReducer from "@/lib/slices/contractReviewSlice";
 
 export const makeStore = () =>
   configureStore({
@@ -23,6 +24,7 @@ export const makeStore = () =>
       railways: railwaysReducer,
       items: itemsReducer,
       tenderPage: tenderPageReducer,
+      contractReview: contractReviewReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 import { prisma } from "@/lib/prisma";
 
 const SHEET_NAME = "MASTER WEBSITES";

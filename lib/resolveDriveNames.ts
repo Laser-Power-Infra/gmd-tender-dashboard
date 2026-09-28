@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import * as google from "@googleapis/drive";
 
 function getAuth() {
   const email = process.env.GDRIVE_CLIENT_EMAIL;

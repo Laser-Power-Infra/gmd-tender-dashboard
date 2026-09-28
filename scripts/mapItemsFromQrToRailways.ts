@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 import { prisma } from "@/lib/prisma";
 import { publishKnowledgebaseTask } from "@/lib/queue/publisher";
 import { closeConnection } from "@/lib/rabbitmq";

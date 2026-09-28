@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import * as google from "@googleapis/drive";
 import { Readable } from "stream";
 import fs from "fs";
 import path from "path";

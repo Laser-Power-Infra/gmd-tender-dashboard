@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 import { prisma } from "@/lib/prisma";
 
 const SPREADSHEET_ID = "1nqSMkIPUMN0mCZhHd6g45K4OF7IhUKVzTLQQvH8XnG8";

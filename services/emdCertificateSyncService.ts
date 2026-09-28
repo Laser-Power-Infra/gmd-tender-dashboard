@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 import pLimit from "p-limit";
 import { prisma } from "@/lib/prisma";
 

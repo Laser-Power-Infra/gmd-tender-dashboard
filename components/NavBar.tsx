@@ -17,6 +17,7 @@ import {
 
 const links: Array<{ href: string; label: string; isExternal?: boolean }> = [
   { href: "/tenders", label: "Tenders" },
+  { href: "/contract-review", label: "Contract Review" },
   // { href: "/", label: "Pre Participation" },
   // { href: "/post-participation", label: "Post Participation" },
   // {

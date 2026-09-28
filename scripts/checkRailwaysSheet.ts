@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 import { prisma } from "@/lib/prisma";
 import { parseDate } from "@/lib/parse-date";
 

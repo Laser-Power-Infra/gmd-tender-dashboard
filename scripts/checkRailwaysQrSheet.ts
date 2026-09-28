@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { google } from "googleapis";
+import * as google from "@googleapis/sheets";
 
 const SPREADSHEET_ID = "1oAInXk5UrZc9qXv3UMrJ5YGjkVNI-TFaiB38EG709KI";
 const WORKSHEET_NAME = "QR";
