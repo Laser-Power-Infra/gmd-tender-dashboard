@@ -40,7 +40,12 @@ export async function sendTenderWebhook(
     process.env.ENVIRONMENT === "PROD"
       ? N8N_WEBHOOK_URL_PROD
       : N8N_WEBHOOK_URL_TEST;
-  if (!url) return;
+  if (!url) {
+    console.warn(
+      `[webhook] N8N webhook URL not configured (ENVIRONMENT=${process.env.ENVIRONMENT})`,
+    );
+    return;
+  }
 
   const payload: WebhookPayload = {
     tenderReferenceNumber: tender.referenceNo,
