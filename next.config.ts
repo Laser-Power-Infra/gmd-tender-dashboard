@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   // output: "standalone",
   experimental: {
     authInterrupts: true,
+    serverActions: {
+      bodySizeLimit: "25mb",
+    },
   },
   allowedDevOrigins: ["192.168.1.200", "192.168.1.229"],
 };   

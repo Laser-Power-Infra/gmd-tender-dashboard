@@ -203,6 +203,8 @@ export interface OptimizedTenderTableProps<T extends Record<string, unknown>> {
   onParseComplete?: () => void;
   disableDefaultDeadlineFilter?: boolean;
   server?: ServerTableMode;
+  /** Show the toolbar "Export Excel" button. Defaults to true. */
+  showExport?: boolean;
 }
 
 function OptimizedTenderTableInner<T extends Record<string, unknown>>({
@@ -217,6 +219,7 @@ function OptimizedTenderTableInner<T extends Record<string, unknown>>({
   onParseComplete,
   disableDefaultDeadlineFilter = false,
   server,
+  showExport = true,
 }: OptimizedTenderTableProps<T>) {
   const [globalSearch, setGlobalSearch] = useState<string>("");
   const [localPage, setLocalPage] = useState<number>(1);
@@ -1444,9 +1447,11 @@ function OptimizedTenderTableInner<T extends Record<string, unknown>>({
           )}
         </div>
         <div className="toolbar-right">
-          <button className="export-btn" onClick={handleExportExcel}>
-            <FileSpreadsheet size={14} /> Export Excel
-          </button>
+          {showExport && (
+            <button className="export-btn" onClick={handleExportExcel}>
+              <FileSpreadsheet size={14} /> Export Excel
+            </button>
+          )}
           {/* <button
             className="export-btn"
             onClick={handleParseCva}
@@ -1658,11 +1663,18 @@ function OptimizedTenderTableInner<T extends Record<string, unknown>>({
                             style={{
                               width: `${columnWidths[String(col.accessor)]}px`,
                               ...(isFrozen ? { left: `${offset}px` } : {}),
+                              ...(col.accessor === "remarks"
+                                ? { height: "100%" }
+                                : {}),
                             }}
                             onClick={() => onRowClick?.(row)}
                           >
                             <div
                               style={{
+                                height:
+                                  col.accessor === "remarks"
+                                    ? "100%"
+                                    : undefined,
                                 maxHeight: 160,
                                 overflowY: "auto",
                                 whiteSpace: "normal",

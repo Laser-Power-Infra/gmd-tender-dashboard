@@ -5,7 +5,8 @@ import { generateText, APICallError, Output } from "ai";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getAiFeedbackContext } from "@/lib/ai-feedback";
-import { logActivity } from "@/lib/activity-logger";
+import { logActivity, requireUser, withLog } from "@/lib/activity-logger";
+import { publishAgentRelevanceTask } from "@/lib/queue/publisher";
 
 const model = openai("gpt-5-mini");
 
@@ -137,6 +138,7 @@ export async function saveAiRelevance(params: {
   valid: boolean;
   reason: string;
 }) {
+  await requireUser();
   const data = {
     aiRelevanceValid: params.valid,
     aiRelevanceReason: params.reason,
@@ -160,3 +162,27 @@ export async function saveAiRelevance(params: {
     details: `Set AI relevance valid=${params.valid} on tender #${params.tenderMergedId}`,
   });
 }
+
+export const publishAiAnalysisJob = withLog(
+  async (params: {
+    referenceNo: string;
+    tenderBrief: string;
+    itemCategory: string;
+  }) => {
+    await requireUser();
+    return publishAgentRelevanceTask({
+      payloadType: "analysis",
+      referenceNo: params.referenceNo,
+      company: "laser",
+      tenderbrief: params.tenderBrief,
+      itemcategory: params.itemCategory,
+      client_id: process.env.TENDER_AGENT_CLIENT_ID ?? "",
+    });
+  },
+  (result, params) => ({
+    action: "CREATE",
+    tableName: "agent:relevance",
+    referenceNo: params.referenceNo,
+    details: `Queued AI analysis job for ${params.referenceNo} (published=${result})`,
+  }),
+);

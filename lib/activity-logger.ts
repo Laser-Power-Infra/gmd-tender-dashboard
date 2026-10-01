@@ -31,6 +31,15 @@ async function createActivityLogRecord(params: LogActivityParams) {
   })
 }
 
+/** Throws when there is no authenticated user. Guards mutating server actions. */
+export async function requireUser() {
+  const session = await auth()
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized! Login to continue.")
+  }
+  return session.user
+}
+
 export async function logActivity(params: LogActivityParams) {
   try {
     const activity = await createActivityLogRecord(params)

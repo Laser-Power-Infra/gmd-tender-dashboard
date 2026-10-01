@@ -87,3 +87,18 @@ export async function publishKnowledgebaseTask(
 ): Promise<boolean> {
   return publishToQueue(QUEUES.KNOWLEDGEBASE, payload);
 }
+
+export type AgentRelevancePayload = {
+  payloadType: "analysis";
+  referenceNo: string;
+  company: "laser" | "gmd";
+  tenderbrief: string;
+  itemcategory: string;
+  client_id: string;
+};
+
+export async function publishAgentRelevanceTask(
+  payload: AgentRelevancePayload,
+): Promise<boolean> {
+  return publishToQueue(QUEUES.AGENT_RELEVANCE, payload);
+}

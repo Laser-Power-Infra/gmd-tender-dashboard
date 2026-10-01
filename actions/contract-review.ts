@@ -2,9 +2,26 @@
 
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
+import { requireUser, withLog } from "@/lib/activity-logger";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const MAX_PAGE_SIZE = 200;
 const FACET_LIMIT = 500;
+
+const S3_ENDPOINT = process.env.AWS_ENDPOINT_URL_S3 ?? "";
+const S3_REGION = process.env.AWS_REGION ?? "ap-southeast-1";
+const S3_BUCKET =
+  process.env.S3_BUCKET ??
+  (S3_ENDPOINT ? new URL(S3_ENDPOINT).hostname.split(".")[0] : "");
+const s3 = new S3Client({
+  endpoint: S3_ENDPOINT,
+  region: S3_REGION,
+  forcePathStyle: true,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
+  },
+});
 
 export type ContractReviewRow = {
   id: string;
@@ -174,3 +191,102 @@ export async function getContractReviewFacet(params: {
     hasBlank,
   };
 }
+
+export type DiagramVerdict = "YES" | "NO" | "NOT_DECIDED";
+
+export const updateContractReviewDiagramVerdict = withLog(
+  async (params: { id: string; verdict: DiagramVerdict }) => {
+    await requireUser();
+    await prisma.contractReview.update({
+      where: { id: params.id },
+      data: { diagramVerdict: params.verdict },
+    });
+    return { ok: true, verdict: params.verdict };
+  },
+  (_result, params) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: params.id,
+    details: `Set diagram verdict to "${params.verdict}" on contract review #${params.id}`,
+  }),
+);
+
+export const updateContractReviewRemarks = withLog(
+  async (params: { id: string; remarks: string | null }) => {
+    await requireUser();
+    await prisma.contractReview.update({
+      where: { id: params.id },
+      data: { remarks: params.remarks },
+    });
+    return { ok: true, remarks: params.remarks };
+  },
+  (_result, params) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: params.id,
+    details: `Updated remarks on contract review #${params.id}`,
+  }),
+);
+
+export const updateContractReviewItem = withLog(
+  async (params: { id: string; item: string | null }) => {
+    await requireUser();
+    const item =
+      params.item == null ? null : params.item.trim().slice(0, 500) || null;
+    await prisma.contractReview.update({
+      where: { id: params.id },
+      data: { item },
+    });
+    return { ok: true, item };
+  },
+  (_result, params) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: params.id,
+    details: `Updated item on contract review #${params.id}`,
+  }),
+);
+
+export const uploadContractReviewDiagram = withLog(
+  async (formData: FormData) => {
+    await requireUser();
+    const id = String(formData.get("id") ?? "");
+    const file = formData.get("file");
+    if (!id) throw new Error("Missing contract review id");
+    if (!(file instanceof File)) throw new Error("No file provided");
+    if (!S3_ENDPOINT || !S3_BUCKET) throw new Error("S3 storage is not configured");
+
+    const extension = file.name.includes(".")
+      ? file.name.split(".").pop()!.toLowerCase()
+      : "bin";
+    const baseName = (file.name.includes(".")
+      ? file.name.slice(0, file.name.lastIndexOf("."))
+      : file.name
+    ).replace(/[^a-zA-Z0-9._-]/g, "_");
+    const key = `contract-review/diagrams/${id}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${baseName}.${extension}`;
+    const body = Buffer.from(await file.arrayBuffer());
+
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: S3_BUCKET,
+        Key: key,
+        Body: body,
+        ContentType: file.type || "application/octet-stream",
+      }),
+    );
+
+    const url = `${S3_ENDPOINT.replace(/\/$/, "")}/${S3_BUCKET}/${key}`;
+    await prisma.contractReview.update({
+      where: { id },
+      data: { diagramUrl: url },
+    });
+
+    return { ok: true, url };
+  },
+  (_result, formData) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: String(formData.get("id") ?? ""),
+    details: `Uploaded diagram for contract review #${formData.get("id")}`,
+  }),
+);

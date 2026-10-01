@@ -136,7 +136,7 @@ function RemarksCell({
 
   if (!canEdit) {
     return (
-      <div style={{ maxHeight: 80, overflowY: "auto", whiteSpace: "normal" }}>
+      <div style={{ height: "100%", minHeight: 160, whiteSpace: "normal" }}>
         {val || <span className="text-slate-300">-</span>}
       </div>
     );
@@ -189,7 +189,7 @@ function RemarksCell({
 
   return (
     <div className="relative group/cell h-full">
-      <div style={{ maxHeight: 80, overflowY: "auto", whiteSpace: "normal" }}>
+      <div style={{ height: "100%", minHeight: 160, whiteSpace: "normal" }}>
         {val || <span className="text-slate-300">-</span>}
       </div>
       <button
@@ -354,9 +354,17 @@ export default function Dashboard() {
     [],
   );
   const feedbackSaving = useAppSelector((s) => s.tenders.feedbackSaving);
-  const { data: session } = useSession();
-  const canEditRemarks =
-    session?.user?.role === "admin" || session?.user?.role === "developer";
+  const { status } = useSession();
+  const isLoggedIn = status === "authenticated";
+  const canEditRemarks = isLoggedIn;
+
+  // Single gate for every mutating interaction. Returns false and toasts when
+  // the visitor is not authenticated.
+  const canMutate = useCallback(() => {
+    if (isLoggedIn) return true;
+    toast.error("Unauthorized! Login to continue.");
+    return false;
+  }, [isLoggedIn]);
 
   const tenderDataRef = useRef(tenderData);
   tenderDataRef.current = tenderData;
@@ -448,6 +456,7 @@ export default function Dashboard() {
 
   const handleAssignmentChange = useCallback(
     (rowIndex: number, type: string, id: string, associationIds: string[]) => {
+      if (!canMutate()) return;
       if (!tenderDataRef.current) return;
       const oldValue = tenderDataRef.current.rows[rowIndex]?.assignedTo ?? "";
       dispatch(
@@ -459,7 +468,7 @@ export default function Dashboard() {
         }),
       );
     },
-    [dispatch],
+    [dispatch, canMutate],
   );
 
   const handleDecisionClick = useCallback(
@@ -470,6 +479,7 @@ export default function Dashboard() {
       id: string,
       value: string,
     ) => {
+      if (!canMutate()) return;
       if (!tenderDataRef.current) return;
       const oldValue = tenderDataRef.current.rows[rowIndex]?.[col] ?? "";
       const newValue = oldValue === value ? "NOT_DECIDED" : value;
@@ -502,7 +512,7 @@ export default function Dashboard() {
           toast.error(`Failed to update: ${err.message}`, { id: toastId });
         });
     },
-    [dispatch],
+    [dispatch, canMutate],
   );
 
   const handleSaveFeedback = useCallback(
@@ -514,6 +524,7 @@ export default function Dashboard() {
       correctedAi: string;
       feedbackReason: string;
     }) => {
+      if (!canMutate()) return;
       const toastId = toast.loading("Saving feedback and re-analyzing...");
       dispatch(saveFeedbackAndReanalyze(params))
         .unwrap()
@@ -531,11 +542,12 @@ export default function Dashboard() {
           setFeedbackRow(null);
         });
     },
-    [dispatch],
+    [dispatch, canMutate],
   );
 
   const handleWebsiteSave = useCallback(
     (params: { tenderMergedId: number; website: string; oldValue: string }) => {
+      if (!canMutate()) return;
       const toastId = toast.loading("Saving website...");
       dispatch(
         updateWebsiteMapping({
@@ -574,11 +586,12 @@ export default function Dashboard() {
           setWebsiteEditRow(null);
         });
     },
-    [dispatch],
+    [dispatch, canMutate],
   );
 
   const handleDocumentUpload = useCallback(
     (params: { tenderMergedId: number; file: File; fileType: string }) => {
+      if (!canMutate()) return;
       const toastId = toast.loading("Uploading tender file...");
       dispatch(
         uploadTenderDocument({
@@ -598,7 +611,7 @@ export default function Dashboard() {
           setDocumentUploadRow(null);
         });
     },
-    [dispatch, refreshTenders],
+    [dispatch, refreshTenders, canMutate],
   );
 
   // Filter dropdown values come from the database now, one column at a time,
@@ -1081,6 +1094,7 @@ export default function Dashboard() {
                       title="Provide Feedback"
                       onClick={(e) => {
                         e.stopPropagation();
+                        if (!canMutate()) return;
                         setFeedbackRow(row);
                       }}
                     >
@@ -1235,6 +1249,7 @@ export default function Dashboard() {
                   value={selectValue}
                   disabled={isSaving}
                   onValueChange={(v) => {
+                    if (!canMutate()) return;
                     const newVal = v === "__clear__" ? "" : (v ?? "");
                     if (newVal === val) return;
                     dispatch(
@@ -1422,6 +1437,7 @@ export default function Dashboard() {
                       title="Upload Tender Document"
                       onClick={(e) => {
                         e.stopPropagation();
+                        if (!canMutate()) return;
                         setDocumentUploadRow(row);
                       }}
                     >
@@ -1560,6 +1576,7 @@ export default function Dashboard() {
                     title="Edit Website"
                     onClick={(e) => {
                       e.stopPropagation();
+                      if (!canMutate()) return;
                       setWebsiteEditRow(row);
                     }}
                   >
@@ -2152,6 +2169,7 @@ export default function Dashboard() {
     mergedGroups,
     columnIndices,
     canEditRemarks,
+    canMutate,
     handleOpenAgentReport,
   ]);
 
@@ -2233,6 +2251,7 @@ export default function Dashboard() {
         <ConfirmAnalysisDialog
           filteredRows={filteredRows}
           loadRows={loadRowsForAnalysis}
+          isLoggedIn={isLoggedIn}
         />
         {feedbackRow && (
           <AiFeedbackDialog
@@ -2306,6 +2325,7 @@ export default function Dashboard() {
       handleWebsiteSave,
       handleDocumentUpload,
       dispatch,
+      isLoggedIn,
     ],
   );
 
@@ -2317,6 +2337,7 @@ export default function Dashboard() {
         associations={tenderData?.associations ?? []}
         associationFilter={associationFilter}
         onAssociationFilterChange={setAssociationFilter}
+        isLoggedIn={isLoggedIn}
       />
 
       <div className="flex flex-col flex-1 min-w-0">

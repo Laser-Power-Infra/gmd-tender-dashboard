@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { isGemReference } from "@/lib/tender-columns";
 import { toISTDateKey } from "@/lib/format-ist";
+import { requireUser } from "@/lib/activity-logger";
 
 const MERGED_DIRECT_MAP: Record<string, string> = {
   tenderNoNitNo: "referenceNo",
@@ -197,6 +198,7 @@ function extractPreserved(old: any): PreservedData {
 }
 
 export async function importEpcTendersAction(): Promise<ImportEpcResult> {
+  await requireUser();
   const file = await prisma.file.create({
     data: { fileName: `EPC Import - ${new Date().toISOString()}` },
   });

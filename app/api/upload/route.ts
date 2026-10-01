@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 import * as XLSX from "xlsx";
 import pLimit from "p-limit";
 import { prisma } from "@/lib/prisma";
@@ -479,6 +480,13 @@ async function insertTenderMerged(
 }
 
 export async function POST(request: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json(
+      { error: "Unauthorized! Login to continue." },
+      { status: 401 },
+    );
+  }
   try {
     const formData = await request.formData();
     const files = formData.getAll("files") as File[];

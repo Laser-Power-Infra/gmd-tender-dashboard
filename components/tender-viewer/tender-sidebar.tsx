@@ -45,6 +45,8 @@ interface TenderSidebarProps {
   associations?: { id: number; name: string; email: string }[];
   associationFilter?: string | null;
   onAssociationFilterChange?: (val: string | null) => void;
+  /** When false, upload/import actions stay visible but block with a toast. */
+  isLoggedIn?: boolean;
 }
 
 export default function TenderSidebar({
@@ -53,6 +55,7 @@ export default function TenderSidebar({
   associations = [],
   associationFilter = null,
   onAssociationFilterChange,
+  isLoggedIn = true,
 }: TenderSidebarProps) {
   const dispatch = useAppDispatch();
   const selectedDateFrom = useAppSelector((s) => s.files.selectedDateFrom);
@@ -60,6 +63,12 @@ export default function TenderSidebar({
   const analyticsFilter = useAppSelector((s) => s.filters.analyticsFilter);
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [uploadDialogMode, setUploadDialogMode] = useState<"parse" | "result">("parse");
+
+  const requireLogin = useCallback(() => {
+    if (isLoggedIn) return true;
+    toast.error("Unauthorized! Login to continue.");
+    return false;
+  }, [isLoggedIn]);
 
   // Single pass. This previously ran four full .filter() scans plus one more
   // scan per association — O(associations x rows) with a split/filter chain
@@ -117,6 +126,7 @@ export default function TenderSidebar({
       : undefined;
 
   const handleImportEpc = useCallback(async () => {
+    if (!requireLogin()) return;
     const toastId = toast.loading(
       "Syncing tenders from executive dashboard...",
     );
@@ -144,7 +154,7 @@ export default function TenderSidebar({
         description: err.message ?? "Unknown error",
       });
     }
-  }, [dispatch]);
+  }, [dispatch, requireLogin]);
 
   const closeDialog = useCallback(() => {
     dispatch(clearFiles());
@@ -179,14 +189,22 @@ export default function TenderSidebar({
               Upload Tenders
             </div>
             <button
-              onClick={() => { setUploadDialogMode("parse"); setShowUploadDialog(true); }}
+              onClick={() => {
+                if (!requireLogin()) return;
+                setUploadDialogMode("parse");
+                setShowUploadDialog(true);
+              }}
               className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-md bg-white/10 text-white/80 text-xs font-medium hover:bg-white/20 transition-colors border border-dashed border-white/20 cursor-pointer"
             >
               <Upload size={14} />
               Upload Files
             </button>
             <button
-              onClick={() => { setUploadDialogMode("result"); setShowUploadDialog(true); }}
+              onClick={() => {
+                if (!requireLogin()) return;
+                setUploadDialogMode("result");
+                setShowUploadDialog(true);
+              }}
               className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-md bg-emerald-600/20 text-emerald-300 text-xs font-medium hover:bg-emerald-600/30 transition-colors border border-dashed border-emerald-400/30 cursor-pointer mt-2"
             >
               <Upload size={14} />

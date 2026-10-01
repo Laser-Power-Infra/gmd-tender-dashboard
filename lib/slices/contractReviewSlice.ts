@@ -3,10 +3,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import {
   getContractReviewPage,
   getContractReviewFacet,
+  updateContractReviewRemarks as updateContractReviewRemarksAction,
+  updateContractReviewDiagramVerdict as updateContractReviewDiagramVerdictAction,
+  updateContractReviewItem as updateContractReviewItemAction,
+  uploadContractReviewDiagram as uploadContractReviewDiagramAction,
   type ContractReviewRow,
   type ContractReviewSort,
   type ContractReviewFilters,
   type ContractReviewSearch,
+  type DiagramVerdict,
 } from "@/actions/contract-review";
 
 interface FacetEntry {
@@ -30,6 +35,12 @@ interface ContractReviewState {
   facets: Record<string, FacetEntry>;
   status: "idle" | "loading" | "ready" | "error";
   error: string | null;
+  /** Cell-level flags for in-flight remarks edits, keyed by row id. */
+  remarksUpdating: Record<string, boolean>;
+  /** Cell-level flags for in-flight verdict/diagram edits, keyed by row id. */
+  verdictUpdating: Record<string, boolean>;
+  /** Cell-level flags for in-flight item edits, keyed by row id. */
+  itemUpdating: Record<string, boolean>;
   /** requestId of the newest dispatch; older responses are discarded. */
   pendingRequestId: string | null;
 }
@@ -46,6 +57,9 @@ const initialState: ContractReviewState = {
   facets: {},
   status: "idle",
   error: null,
+  remarksUpdating: {},
+  verdictUpdating: {},
+  itemUpdating: {},
   pendingRequestId: null,
 };
 
@@ -93,6 +107,39 @@ export const loadContractReviewFacet = createAsyncThunk(
         entry.status !== "error"
       );
     },
+  },
+);
+
+export const updateContractReviewRemarks = createAsyncThunk(
+  "contractReview/updateRemarks",
+  async (args: { id: string; remarks: string | null }) => {
+    await updateContractReviewRemarksAction(args);
+    return args;
+  },
+);
+
+export const updateContractReviewVerdict = createAsyncThunk(
+  "contractReview/updateVerdict",
+  async (args: { id: string; verdict: DiagramVerdict }) => {
+    await updateContractReviewDiagramVerdictAction(args);
+    return args;
+  },
+);
+
+export const updateContractReviewItem = createAsyncThunk(
+  "contractReview/updateItem",
+  async (args: { id: string; item: string | null }) => {
+    const result = await updateContractReviewItemAction(args);
+    return { id: args.id, item: result.item };
+  },
+);
+
+export const uploadContractReviewDiagram = createAsyncThunk(
+  "contractReview/uploadDiagram",
+  async (formData: FormData) => {
+    const id = String(formData.get("id") ?? "");
+    const result = await uploadContractReviewDiagramAction(formData);
+    return { id, url: result.url };
   },
 );
 
@@ -200,6 +247,56 @@ export const contractReviewSlice = createSlice({
           status: "error",
           queryKey: contractReviewFilterKey(filters, search),
         };
+      })
+      .addCase(updateContractReviewRemarks.pending, (state, action) => {
+        state.remarksUpdating[action.meta.arg.id] = true;
+      })
+      .addCase(updateContractReviewRemarks.fulfilled, (state, action) => {
+        const { id, remarks } = action.payload;
+        delete state.remarksUpdating[id];
+        const row = state.rows.find((r) => r.id === id);
+        if (row) row.remarks = remarks;
+      })
+      .addCase(updateContractReviewRemarks.rejected, (state, action) => {
+        delete state.remarksUpdating[action.meta.arg.id];
+      })
+      .addCase(updateContractReviewVerdict.pending, (state, action) => {
+        state.verdictUpdating[action.meta.arg.id] = true;
+      })
+      .addCase(updateContractReviewVerdict.fulfilled, (state, action) => {
+        const { id, verdict } = action.payload;
+        delete state.verdictUpdating[id];
+        const row = state.rows.find((r) => r.id === id);
+        if (row) row.diagramVerdict = verdict;
+      })
+      .addCase(updateContractReviewVerdict.rejected, (state, action) => {
+        delete state.verdictUpdating[action.meta.arg.id];
+      })
+      .addCase(updateContractReviewItem.pending, (state, action) => {
+        state.itemUpdating[action.meta.arg.id] = true;
+      })
+      .addCase(updateContractReviewItem.fulfilled, (state, action) => {
+        const { id, item } = action.payload;
+        delete state.itemUpdating[id];
+        const row = state.rows.find((r) => r.id === id);
+        if (row) row.item = item;
+      })
+      .addCase(updateContractReviewItem.rejected, (state, action) => {
+        delete state.itemUpdating[action.meta.arg.id];
+      })
+      .addCase(uploadContractReviewDiagram.pending, (state, action) => {
+        const id = String(action.meta.arg.get("id") ?? "");
+        state.verdictUpdating[id] = true;
+      })
+      .addCase(uploadContractReviewDiagram.fulfilled, (state, action) => {
+        const { id, url } = action.payload;
+        delete state.verdictUpdating[id];
+        const row = state.rows.find((r) => r.id === id);
+        if (row) row.diagramUrl = url;
+      })
+      .addCase(uploadContractReviewDiagram.rejected, (state, action) => {
+        const id = String(action.meta.arg.get("id") ?? "");
+        delete state.verdictUpdating[id];
       });
   },
 });

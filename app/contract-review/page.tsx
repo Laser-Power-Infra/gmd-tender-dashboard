@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
-import { RefreshCw, Eraser, ChevronDown, ChevronUp } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { RefreshCw, Eraser, ChevronDown, ChevronUp, Upload, Check, Loader2, X } from "lucide-react";
+import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
   loadContractReviewPage,
@@ -13,11 +15,16 @@ import {
   clearFilter,
   clearAllFilters,
   setColumnSearch,
+  updateContractReviewRemarks,
+  updateContractReviewVerdict,
+  updateContractReviewItem,
+  uploadContractReviewDiagram,
 } from "@/lib/slices/contractReviewSlice";
 import "@/app/SupplyHistory.css";
 import "@/components/TenderTable.css";
 import {
   CONTRACT_REVIEW_COLUMN_GROUPS,
+  CONTRACT_REVIEW_ITEM_OPTIONS,
   GROUP_HEADER_TO_ACCESSOR,
   type ContractReviewColumn,
 } from "@/lib/contractReviewColumns";
@@ -29,18 +36,7 @@ const COLUMNS: Column[] = [
   { header: "Item Code", accessor: "itemCode", defaultWidth: 120, sortable: true },
   { header: "MC No", accessor: "mcNo", defaultWidth: 110 },
   { header: "Item Names/Party Item Names", accessor: "grp-1", defaultWidth: 300, children: CONTRACT_REVIEW_COLUMN_GROUPS[1].children },
-  { header: "CV", accessor: "cv", defaultWidth: 100 },
   { header: "Order Qty", accessor: "orderQty", defaultWidth: 110, align: "right" },
-  { header: "Free Stock", accessor: "freeStock", defaultWidth: 110, align: "right" },
-  { header: "Final Req", accessor: "finalReq", defaultWidth: 110, align: "right" },
-  { header: "MC Qty", accessor: "mcQty", defaultWidth: 100, align: "right" },
-  { header: "Balance MC", accessor: "balanceMc", defaultWidth: 110, align: "right" },
-  { header: "Prod Ord Qty", accessor: "prodOrdQty", defaultWidth: 120, align: "right" },
-  { header: "Balance To Prod Ord", accessor: "balanceToProdOrd", defaultWidth: 140, align: "right" },
-  { header: "Balance To Prod Ent", accessor: "balanceToProdEnt", defaultWidth: 140, align: "right" },
-  { header: "DI Qty", accessor: "diQty", defaultWidth: 100, align: "right" },
-  { header: "Billed Qty", accessor: "billedQty", defaultWidth: 110, align: "right" },
-  { header: "Bal Bill Ag MC", accessor: "balBillAgMc", defaultWidth: 120, align: "right" },
   { header: "Bal Bill Ag Cont", accessor: "balBillAgCont", defaultWidth: 130, align: "right" },
   { header: "Item / Size / PN RATING", accessor: "grp-2", defaultWidth: 340, children: CONTRACT_REVIEW_COLUMN_GROUPS[2].children },
   { header: "Date Of Contract", accessor: "dateOfContract", defaultWidth: 140, align: "center" },
@@ -49,27 +45,13 @@ const COLUMNS: Column[] = [
   { header: "RM Code For GB", accessor: "rmCodeForGb", defaultWidth: 140 },
   { header: "Payment Terms", accessor: "paymentTerms", defaultWidth: 140 },
   { header: "LC / RTGS / Issuing bank name", accessor: "grp-4", defaultWidth: 420, children: CONTRACT_REVIEW_COLUMN_GROUPS[4].children },
-  { header: "BOM Formula Trial", accessor: "bomFormulaTrial", defaultWidth: 150 },
-  { header: "ERP Party Name", accessor: "erpPartyNameFromGmdSupplyHistory", defaultWidth: 200 },
   { header: "Item Type", accessor: "itemType", defaultWidth: 110 },
-  { header: "Job Code", accessor: "jobCode", defaultWidth: 120 },
-  { header: "Bal DI Qty", accessor: "balDiQty", defaultWidth: 110, align: "right" },
-  { header: "Bal MC Val", accessor: "balMcVal", defaultWidth: 120, align: "right" },
-  { header: "Bal Prod Ord Val", accessor: "balProdOrdVal", defaultWidth: 130, align: "right" },
-  { header: "Bal To Prod Ent Val", accessor: "balToProdOrdEntVal", defaultWidth: 150, align: "right" },
-  { header: "Bal Bill Ag MC Val", accessor: "balBillAgMcVal", defaultWidth: 140, align: "right" },
-  { header: "Bal Bill Ag Cont Val", accessor: "balBillAgContVal", defaultWidth: 150, align: "right" },
-  { header: "Bal DI Val", accessor: "balDiVal", defaultWidth: 120, align: "right" },
-  { header: "DI Val", accessor: "diVal", defaultWidth: 110, align: "right" },
-  { header: "IC Qty", accessor: "icQty", defaultWidth: 100, align: "right" },
   { header: "BOM Id", accessor: "bomId", defaultWidth: 100 },
-  { header: "Status", accessor: "status", defaultWidth: 120 },
   { header: "MC Received Pending", accessor: "mcReceivedPending", defaultWidth: 160 },
-  { header: "Inspection", accessor: "inspection", defaultWidth: 120 },
   { header: "Offer Pending Done", accessor: "offerPendingDone", defaultWidth: 150 },
   { header: "Remarks", accessor: "remarks", defaultWidth: 200 },
-  { header: "Cost From Quotation", accessor: "costfromQuotation", defaultWidth: 150 },
   { header: "Production Order No", accessor: "productionOrderNumber", defaultWidth: 150 },
+  { header: "Drawing Upload", accessor: "drawingUpload", defaultWidth: 200 },
 ];
 
 function DebouncedColumnSearch({
@@ -213,10 +195,19 @@ function SidebarFilter({ accessor, label }: { accessor: string; label: string })
 
 export default function ContractReviewPage() {
   const dispatch = useAppDispatch();
-  const { rows, total, page, pageSize, sort, filters, searches, facets, status, error, quantity } =
+  const { status: authStatus } = useSession();
+  const isLoggedIn = authStatus === "authenticated";
+  const requireLogin = useCallback(() => {
+    if (isLoggedIn) return true;
+    toast.error("Unauthorized! Login to continue.");
+    return false;
+  }, [isLoggedIn]);
+  const { rows, total, page, pageSize, sort, filters, searches, facets, status, error, quantity, remarksUpdating, verdictUpdating, itemUpdating } =
     useAppSelector((s) => s.contractReview);
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [editingRemarksId, setEditingRemarksId] = useState<string | null>(null);
+  const [draftRemarks, setDraftRemarks] = useState("");
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() => {
     const m: Record<string, number> = {};
@@ -270,6 +261,57 @@ export default function ContractReviewPage() {
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onUp);
     document.body.style.cursor = "col-resize";
+  };
+
+  const handleVerdict = async (rowId: string, current: string, value: "YES" | "NO") => {
+    if (!requireLogin()) return;
+    const next = current === value ? "NOT_DECIDED" : value;
+    const toastId = toast.loading("Updating verdict...");
+    try {
+      await dispatch(updateContractReviewVerdict({ id: rowId, verdict: next })).unwrap();
+      toast.success(`Verdict set to ${next}`, { id: toastId });
+    } catch (err) {
+      toast.error(`Failed to update: ${(err as Error).message}`, { id: toastId });
+    }
+  };
+
+  const handleRemarksSave = async (rowId: string) => {
+    if (!requireLogin()) return;
+    const trimmed = draftRemarks.trim();
+    const next = trimmed === "" ? null : trimmed;
+    setEditingRemarksId(null);
+    const toastId = toast.loading("Updating remarks...");
+    try {
+      await dispatch(updateContractReviewRemarks({ id: rowId, remarks: next })).unwrap();
+      toast.success("Remarks updated", { id: toastId });
+    } catch (err) {
+      toast.error(`Failed to update: ${(err as Error).message}`, { id: toastId });
+    }
+  };
+
+  const handleDiagramUpload = async (rowId: string, file: File) => {
+    if (!requireLogin()) return;
+    const toastId = toast.loading("Uploading drawing...");
+    try {
+      const fd = new FormData();
+      fd.append("id", rowId);
+      fd.append("file", file);
+      await dispatch(uploadContractReviewDiagram(fd)).unwrap();
+      toast.success("Drawing uploaded", { id: toastId });
+    } catch (err) {
+      toast.error(`Upload failed: ${(err as Error).message}`, { id: toastId });
+    }
+  };
+
+  const handleItemSave = async (rowId: string, value: string) => {
+    if (!requireLogin()) return;
+    const toastId = toast.loading("Updating item...");
+    try {
+      await dispatch(updateContractReviewItem({ id: rowId, item: value === "" ? null : value })).unwrap();
+      toast.success("Item updated", { id: toastId });
+    } catch (err) {
+      toast.error(`Failed to update: ${(err as Error).message}`, { id: toastId });
+    }
   };
 
   const handleSort = (col: Column) => {
@@ -373,9 +415,10 @@ export default function ContractReviewPage() {
                             minWidth: `${columnWidths[col.accessor]}px`,
                             ...(col.sticky ? { left: stickyLeftOffsets[col.accessor], zIndex: openDropdown === col.accessor ? 100 : 3 } : {}),
                             ...(openDropdown === col.accessor || (col.children && col.children.some((c) => GROUP_HEADER_TO_ACCESSOR[c.header] === openDropdown)) ? { zIndex: 100 } : {}),
+                            ...(col.accessor === "drawingUpload" ? { textAlign: "center" } : {}),
                           }}
                         >
-                          <div className="header-content" onClick={() => handleSort(col)} style={{ cursor: col.sortable ? "pointer" : "default" }}>
+                          <div className="header-content" onClick={() => handleSort(col)} style={{ cursor: col.sortable ? "pointer" : "default", ...(col.accessor === "drawingUpload" ? { justifyContent: "center" } : {}) }}>
                             <span>{col.header}</span>
                             {sort?.column === col.accessor && (
                               <span className="sort-indicator" style={{ display: "inline-flex", alignItems: "center" }}>
@@ -463,7 +506,7 @@ export default function ContractReviewPage() {
                                   </div>
                                 );
                               })
-                            : (
+                            : col.accessor !== "drawingUpload" && (
                           <div
                             className="custom-multiselect-container"
                             ref={(el) => { dropdownRefs.current[col.accessor] = el; }}
@@ -532,7 +575,7 @@ export default function ContractReviewPage() {
                             )}
                           </div>
                           )}
-                          {!col.children && (
+                          {!col.children && col.accessor !== "drawingUpload" && (
                                 <DebouncedColumnSearch
                                   accessor={col.accessor}
                                   value={searches[col.accessor] ?? ""}
@@ -555,6 +598,64 @@ export default function ContractReviewPage() {
                       rows.map((row) => (
                         <tr key={String(row.id)} className="tender-row">
                           {COLUMNS.map((col) => {
+                            if (col.accessor === "drawingUpload") {
+                              const rowRec = row as Record<string, unknown>;
+                              const rowId = String(rowRec.id);
+                              const url = String(rowRec.diagramUrl ?? "");
+                              const verdict = String(rowRec.diagramVerdict ?? "");
+                              const isYes = verdict === "YES";
+                              const isNo = verdict === "NO";
+                              const isUpdating = !!verdictUpdating[rowId];
+                              const btnBase: React.CSSProperties = { width: "26px", height: "26px", borderRadius: "6px", fontSize: "12px", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "2px solid", transition: "all 0.15s" };
+                              return (
+                                <td key={col.accessor} style={{ padding: "8px 6px", textAlign: "center" }}>
+                                  <div className="cell-scroll-wrap" style={{ height: "auto", maxHeight: "96px", overflowY: "auto", overflowX: "auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                                    {url ? (
+                                      <a href={url} target="_blank" rel="noreferrer" style={{ color: "var(--color-brand)", fontWeight: 600, fontSize: "12px", textDecoration: "underline", textAlign: "center", wordBreak: "break-word" }}>
+                                        View Drawing
+                                      </a>
+                                    ) : (
+                                      <span style={{ color: "#b0b8c1", fontSize: "12px" }}>No Drawing</span>
+                                    )}
+                                    <div style={{ display: "inline-flex", gap: "6px" }}>
+                                      <button
+                                        type="button"
+                                        title="Yes"
+                                        disabled={isUpdating}
+                                        onClick={() => handleVerdict(rowId, verdict, "YES")}
+                                        style={{ ...btnBase, cursor: isUpdating ? "not-allowed" : "pointer", opacity: isUpdating ? 0.5 : 1, ...(isYes ? { background: "#22c55e", color: "#fff", borderColor: "#16a34a" } : { background: "#fff", color: "#94a3b8", borderColor: "#cbd5e1" }) }}
+                                      >
+                                        Y
+                                      </button>
+                                      <button
+                                        type="button"
+                                        title="No"
+                                        disabled={isUpdating}
+                                        onClick={() => handleVerdict(rowId, verdict, "NO")}
+                                        style={{ ...btnBase, cursor: isUpdating ? "not-allowed" : "pointer", opacity: isUpdating ? 0.5 : 1, ...(isNo ? { background: "#ef4444", color: "#fff", borderColor: "#dc2626" } : { background: "#fff", color: "#94a3b8", borderColor: "#cbd5e1" }) }}
+                                      >
+                                        N
+                                      </button>
+                                    </div>
+                                    <label
+                                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "6px 14px", fontSize: "12px", fontWeight: 700, color: "#fff", background: "var(--color-brand)", border: "1px solid var(--color-brand)", borderRadius: "6px", cursor: isUpdating ? "not-allowed" : "pointer", opacity: isUpdating ? 0.5 : 1, whiteSpace: "nowrap" }}
+                                    >
+                                      <Upload size={13} /> {url ? "Replace" : "Upload"}
+                                      <input
+                                        type="file"
+                                        hidden
+                                        disabled={isUpdating}
+                                        onChange={(e) => {
+                                          const f = e.target.files?.[0];
+                                          if (f) handleDiagramUpload(rowId, f);
+                                          e.target.value = "";
+                                        }}
+                                      />
+                                    </label>
+                                  </div>
+                                </td>
+                              );
+                            }
                             if (col.children) {
                               return (
                                 <td
@@ -567,6 +668,39 @@ export default function ContractReviewPage() {
                                       const accessor = GROUP_HEADER_TO_ACCESSOR[child.header];
                                       const raw = accessor ? (row as Record<string, unknown>)[accessor] : undefined;
                                       const value = raw == null || String(raw).trim() === "" ? "-" : String(raw);
+                                      if (col.accessor === "grp-1") {
+                                        return (
+                                          <div key={child.header} style={{ whiteSpace: "normal", wordBreak: "break-word", marginBottom: "2px", lineHeight: 1.4 }}>
+                                            {value === "-" ? <span style={{ color: "#b0b8c1" }}>-</span> : value}
+                                          </div>
+                                        );
+                                      }
+                                      if (accessor === "item") {
+                                        const rowId = String((row as Record<string, unknown>).id);
+                                        const current = raw == null ? "" : String(raw);
+                                        const saving = !!itemUpdating[rowId];
+                                        const options =
+                                          current && !CONTRACT_REVIEW_ITEM_OPTIONS.includes(current)
+                                            ? [current, ...CONTRACT_REVIEW_ITEM_OPTIONS]
+                                            : CONTRACT_REVIEW_ITEM_OPTIONS;
+                                        return (
+                                          <div key={child.header} style={{ display: "flex", alignItems: "flex-start", marginBottom: "2px" }}>
+                                            <span style={{ color: "#8a919a", flexShrink: 0, marginRight: "4px", whiteSpace: "nowrap" }}>{child.label}</span>
+                                            <select
+                                              value={current}
+                                              disabled={saving}
+                                              onClick={(e) => e.stopPropagation()}
+                                              onChange={(e) => handleItemSave(rowId, e.target.value)}
+                                              style={{ flex: 1, minWidth: 0, padding: "2px 4px", borderRadius: "4px", border: "1px solid #e5e7eb", fontSize: "inherit", background: saving ? "#f1f3f4" : "#fff", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? 0.6 : 1 }}
+                                            >
+                                              {current === "" && <option value="">—</option>}
+                                              {options.map((o) => (
+                                                <option key={o} value={o}>{o}</option>
+                                              ))}
+                                            </select>
+                                          </div>
+                                        );
+                                      }
                                       return (
                                         <div key={child.header} style={{ display: "flex", alignItems: "flex-start", marginBottom: "2px" }}>
                                           <span style={{ color: "#8a919a", flexShrink: 0, marginRight: "4px", whiteSpace: "nowrap" }}>{child.label}</span>
@@ -576,6 +710,54 @@ export default function ContractReviewPage() {
                                         </div>
                                       );
                                     })}
+                                  </div>
+                                </td>
+                              );
+                            }
+                            if (col.accessor === "remarks") {
+                              const rowRec = row as Record<string, unknown>;
+                              const rowId = String(rowRec.id);
+                              const isUpdating = !!remarksUpdating[rowId];
+                              const current = rowRec.remarks ? String(rowRec.remarks) : "";
+                              if (editingRemarksId === rowId) {
+                                return (
+                                  <td key={col.accessor} style={{ padding: "4px 6px", verticalAlign: "top" }}>
+                                    <div className="flex items-start gap-1" onClick={(e) => e.stopPropagation()}>
+                                      <textarea
+                                        autoFocus
+                                        value={draftRemarks}
+                                        onChange={(e) => setDraftRemarks(e.target.value)}
+                                        onKeyDown={(e) => {
+                                          if (e.key === "Escape") setEditingRemarksId(null);
+                                          if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                                            e.preventDefault();
+                                            handleRemarksSave(rowId);
+                                          }
+                                        }}
+                                        placeholder="Remarks"
+                                        rows={3}
+                                        style={{ flex: 1, padding: "6px 8px", borderRadius: "6px", border: "1px solid #dadce0", fontSize: "12px", resize: "vertical", minHeight: "56px" }}
+                                      />
+                                      <div className="flex flex-col gap-1">
+                                        <button onClick={() => handleRemarksSave(rowId)} disabled={isUpdating} title="Save" style={{ padding: "6px", borderRadius: "4px", background: "var(--color-brand)", color: "white", border: "none", cursor: isUpdating ? "not-allowed" : "pointer", opacity: isUpdating ? 0.6 : 1 }}><Check size={12} /></button>
+                                        <button onClick={() => setEditingRemarksId(null)} disabled={isUpdating} title="Cancel" style={{ padding: "6px", borderRadius: "4px", background: "#e5e7eb", border: "none", cursor: isUpdating ? "not-allowed" : "pointer" }}><X size={12} /></button>
+                                      </div>
+                                    </div>
+                                  </td>
+                                );
+                              }
+                              return (
+                                <td key={col.accessor} title={current || "Click to edit"} style={{ padding: "4px 6px", verticalAlign: "top" }}>
+                                  <div
+                                    onClick={() => {
+                                      if (!requireLogin()) return;
+                                      setDraftRemarks(current);
+                                      setEditingRemarksId(rowId);
+                                    }}
+                                    style={{ padding: "6px 8px", borderRadius: "6px", border: "1px solid transparent", background: isUpdating ? "#f1f3f4" : "transparent", cursor: "pointer", fontSize: "12px", minHeight: "28px", whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+                                  >
+                                    {isUpdating ? <Loader2 size={12} className="animate-spin mr-1" /> : null}
+                                    {current ? current : <span style={{ color: "#9ca3af" }}>— Add remarks</span>}
                                   </div>
                                 </td>
                               );
