@@ -7,14 +7,14 @@ services:
     # ghcr.io/laser-power-infra/laser-tender:${APP_VERSION:-latest}
     container_name: gmd-tender-dashboard
     ports:
-      - "3126:3126"
+      - "4126:4126"
 
     env_file:
       - .env.production
 
     environment:
       NODE_ENV: production
-      PORT: 3126
+      PORT: 4126
       HOSTNAME: 0.0.0.0
       
       # Paths inside the container
