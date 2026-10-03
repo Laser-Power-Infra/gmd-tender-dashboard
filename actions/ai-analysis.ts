@@ -6,7 +6,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getAiFeedbackContext } from "@/lib/ai-feedback";
 import { logActivity, requireUser, withLog } from "@/lib/activity-logger";
-import { publishAgentRelevanceTask } from "@/lib/queue/publisher";
+import { publishAiRelevanceTask } from "@/lib/queue/publisher";
+// import { publishAgentRelevanceTask } from "@/lib/queue/publisher";
 
 const model = openai("gpt-5-mini");
 
@@ -170,13 +171,13 @@ export const publishAiAnalysisJob = withLog(
     itemCategory: string;
   }) => {
     await requireUser();
-    return publishAgentRelevanceTask({
+    return publishAiRelevanceTask({
       payloadType: "analysis",
       referenceNo: params.referenceNo,
       company: "laser",
       tenderbrief: params.tenderBrief,
       itemcategory: params.itemCategory,
-      client_id: process.env.TENDER_AGENT_CLIENT_ID ?? "",
+      // client_id: process.env.TENDER_AGENT_CLIENT_ID ?? "",
     });
   },
   (result, params) => ({
