@@ -174,7 +174,8 @@ export const publishAiAnalysisJob = withLog(
     return publishAiRelevanceTask({
       payloadType: "analysis",
       referenceNo: params.referenceNo,
-      company: "laser",
+      company: "gmd",
+      category: "valve",
       tenderbrief: params.tenderBrief,
       itemcategory: params.itemCategory,
       // client_id: process.env.TENDER_AGENT_CLIENT_ID ?? "",

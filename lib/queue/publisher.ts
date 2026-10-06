@@ -129,7 +129,8 @@ export async function publishKnowledgebaseTask(
 export type AiRelevancePayload = {
   payloadType: "analysis";
   referenceNo: string;
-  company: "laser" | "gmd";
+  company: "gmd";
+  category: "valve";
   tenderbrief: string;
   itemcategory: string;
 };
