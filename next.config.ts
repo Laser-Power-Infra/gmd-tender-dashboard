@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
     serverActions: {
-      bodySizeLimit: "25mb",
+      bodySizeLimit: "100mb",
     },
   },
   allowedDevOrigins: ["192.168.1.200", "192.168.1.229"],
