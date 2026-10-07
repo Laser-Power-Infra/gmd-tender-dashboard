@@ -6,7 +6,8 @@ import {
   updateContractReviewRemarks as updateContractReviewRemarksAction,
   updateContractReviewDiagramVerdict as updateContractReviewDiagramVerdictAction,
   updateContractReviewItem as updateContractReviewItemAction,
-  uploadContractReviewDiagram as uploadContractReviewDiagramAction,
+  createContractReviewDiagramUploadUrl as createContractReviewDiagramUploadUrlAction,
+  confirmContractReviewDiagramUpload as confirmContractReviewDiagramUploadAction,
   type ContractReviewRow,
   type ContractReviewSort,
   type ContractReviewFilters,
@@ -137,8 +138,28 @@ export const updateContractReviewItem = createAsyncThunk(
 export const uploadContractReviewDiagram = createAsyncThunk(
   "contractReview/uploadDiagram",
   async (formData: FormData) => {
+    const file = formData.get("file");
+    if (!(file instanceof File)) throw new Error("No file provided");
     const id = String(formData.get("id") ?? "");
-    const result = await uploadContractReviewDiagramAction(formData);
+
+    const meta = new FormData();
+    meta.append("id", id);
+    meta.append("fileName", file.name);
+    meta.append("contentType", file.type);
+    const { uploadUrl, publicUrl } =
+      await createContractReviewDiagramUploadUrlAction(meta);
+
+    const res = await fetch(uploadUrl, {
+      method: "PUT",
+      body: file,
+      headers: { "Content-Type": file.type || "application/octet-stream" },
+    });
+    if (!res.ok) throw new Error(`Upload failed (${res.status})`);
+
+    const result = await confirmContractReviewDiagramUploadAction({
+      id,
+      url: publicUrl,
+    });
     return { id, url: result.url };
   },
 );

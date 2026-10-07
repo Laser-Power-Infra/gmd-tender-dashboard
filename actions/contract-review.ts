@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import { requireUser, withLog } from "@/lib/activity-logger";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const MAX_PAGE_SIZE = 200;
 const FACET_LIMIT = 500;
@@ -247,46 +248,62 @@ export const updateContractReviewItem = withLog(
   }),
 );
 
-export const uploadContractReviewDiagram = withLog(
+export const createContractReviewDiagramUploadUrl = withLog(
   async (formData: FormData) => {
     await requireUser();
     const id = String(formData.get("id") ?? "");
-    const file = formData.get("file");
+    const fileName = String(formData.get("fileName") ?? "");
+    const contentType =
+      String(formData.get("contentType") ?? "") || "application/octet-stream";
     if (!id) throw new Error("Missing contract review id");
-    if (!(file instanceof File)) throw new Error("No file provided");
+    if (!fileName) throw new Error("No file provided");
     if (!S3_ENDPOINT || !S3_BUCKET) throw new Error("S3 storage is not configured");
 
-    const extension = file.name.includes(".")
-      ? file.name.split(".").pop()!.toLowerCase()
+    const extension = fileName.includes(".")
+      ? fileName.split(".").pop()!.toLowerCase()
       : "bin";
-    const baseName = (file.name.includes(".")
-      ? file.name.slice(0, file.name.lastIndexOf("."))
-      : file.name
+    const baseName = (fileName.includes(".")
+      ? fileName.slice(0, fileName.lastIndexOf("."))
+      : fileName
     ).replace(/[^a-zA-Z0-9._-]/g, "_");
     const key = `contract-review/diagrams/${id}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${baseName}.${extension}`;
-    const body = Buffer.from(await file.arrayBuffer());
 
-    await s3.send(
+    const uploadUrl = await getSignedUrl(
+      s3,
       new PutObjectCommand({
         Bucket: S3_BUCKET,
         Key: key,
-        Body: body,
-        ContentType: file.type || "application/octet-stream",
+        ContentType: contentType,
       }),
+      { expiresIn: 300 },
     );
 
-    const url = `${S3_ENDPOINT.replace(/\/$/, "")}/${S3_BUCKET}/${key}`;
-    await prisma.contractReview.update({
-      where: { id },
-      data: { diagramUrl: url },
-    });
-
-    return { ok: true, url };
+    return {
+      uploadUrl,
+      publicUrl: `${S3_ENDPOINT.replace(/\/$/, "")}/${S3_BUCKET}/${key}`,
+    };
   },
   (_result, formData) => ({
-    action: "UPDATE" as const,
+    action: "CREATE" as const,
     tableName: "ContractReview",
     recordId: String(formData.get("id") ?? ""),
-    details: `Uploaded diagram for contract review #${formData.get("id")}`,
+    details: `Requested diagram upload URL for contract review #${formData.get("id")}`,
+  }),
+);
+
+export const confirmContractReviewDiagramUpload = withLog(
+  async (input: { id: string; url: string }) => {
+    await requireUser();
+    await prisma.contractReview.update({
+      where: { id: input.id },
+      data: { diagramUrl: input.url },
+    });
+    return { ok: true, url: input.url };
+  },
+  (_result, input) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: input.id,
+    details: `Uploaded diagram for contract review #${input.id}`,
   }),
 );
