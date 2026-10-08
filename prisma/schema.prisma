@@ -1254,8 +1254,9 @@ model ContractReview {
   status                           String?
   mcReceivedPending                String?
   inspection                       String?
-  offerPendingDone       String?
+  offerPendingDone                 String?
   remarks                          String?
+  costCodeRef                      String?
   offerNumber                      String[] @default([])
   inspectionNumber                 String[] @default([])
   diDate                           String[] @default([])
@@ -1264,11 +1265,27 @@ model ContractReview {
   productionOrderNumber            String?
   diagramUrl                       String?
   diagramVerdict                   String?
+  rmPhysicalStock                  String?
 
   poNo      String? //sync from sheetid = 1sf-uCfCSAUovNAWJSiSyojTPFvUSzmp23keF0ymkjIE
   orderList String[] @default([]) //sync from sheetid = 1sf-uCfCSAUovNAWJSiSyojTPFvUSzmp23keF0ymkjIE
 
+  // Hidden data carrier. Drives the "C" chip beside the item code in the UI;
+  // never rendered as its own column.
+  cBatch String?
+  nBatch String?
+
   syncedAt  DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ---------- ACTUATOR OPTIONS ----------
+model ActuatorOption {
+  id         Int      @id @default(autoincrement())
+  optionName String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("actuator_options")
 }
