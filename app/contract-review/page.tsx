@@ -20,6 +20,7 @@ import {
   updateContractReviewItem,
   uploadContractReviewDiagram,
 } from "@/lib/slices/contractReviewSlice";
+import { getActuatorOptions, updateContractReviewActuator } from "@/actions/contract-review";
 import "@/app/SupplyHistory.css";
 import "@/components/TenderTable.css";
 import {
@@ -43,8 +44,7 @@ const COLUMNS: Column[] = [
   { header: "Clearance Status", accessor: "clearanceStatus", defaultWidth: 150 },
   { header: "Actuator / RM Code for Actuator", accessor: "grp-3", defaultWidth: 260, children: CONTRACT_REVIEW_COLUMN_GROUPS[3].children },
   { header: "RM Code For GB", accessor: "rmCodeForGb", defaultWidth: 140 },
-  { header: "Payment Terms", accessor: "paymentTerms", defaultWidth: 140 },
-  { header: "LC / RTGS / Issuing bank name", accessor: "grp-4", defaultWidth: 420, children: CONTRACT_REVIEW_COLUMN_GROUPS[4].children },
+  { header: "LC / RTGS", accessor: "grp-4", defaultWidth: 420, children: CONTRACT_REVIEW_COLUMN_GROUPS[4].children },
   { header: "Item Type", accessor: "itemType", defaultWidth: 110 },
   { header: "BOM Id", accessor: "bomId", defaultWidth: 100 },
   { header: "MC Received Pending", accessor: "mcReceivedPending", defaultWidth: 160 },
@@ -208,6 +208,9 @@ export default function ContractReviewPage() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [editingRemarksId, setEditingRemarksId] = useState<string | null>(null);
   const [draftRemarks, setDraftRemarks] = useState("");
+  const [actuatorOptions, setActuatorOptions] = useState<string[]>([]);
+  const [actuatorSaving, setActuatorSaving] = useState<Record<string, boolean>>({});
+  const [actuatorOverrides, setActuatorOverrides] = useState<Record<string, string>>({});
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() => {
     const m: Record<string, number> = {};
@@ -239,6 +242,14 @@ export default function ContractReviewPage() {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [openDropdown]);
+
+  useEffect(() => {
+    let active = true;
+    getActuatorOptions()
+      .then((opts) => { if (active) setActuatorOptions(opts); })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   const handleResizeStart = (e: React.MouseEvent, accessor: string, currentWidth: number) => {
     e.preventDefault();
@@ -311,6 +322,25 @@ export default function ContractReviewPage() {
       toast.success("Item updated", { id: toastId });
     } catch (err) {
       toast.error(`Failed to update: ${(err as Error).message}`, { id: toastId });
+    }
+  };
+
+  const handleActuatorSave = async (rowId: string, value: string) => {
+    if (!requireLogin()) return;
+    const toastId = toast.loading("Updating actuator...");
+    setActuatorSaving((s) => ({ ...s, [rowId]: true }));
+    try {
+      const res = await updateContractReviewActuator({ id: rowId, actuator: value === "" ? null : value });
+      setActuatorOverrides((s) => ({ ...s, [rowId]: res.actuator ?? "" }));
+      toast.success("Actuator updated", { id: toastId });
+    } catch (err) {
+      toast.error(`Failed to update: ${(err as Error).message}`, { id: toastId });
+    } finally {
+      setActuatorSaving((s) => {
+        const next = { ...s };
+        delete next[rowId];
+        return next;
+      });
     }
   };
 
@@ -426,6 +456,16 @@ export default function ContractReviewPage() {
                               </span>
                             )}
                           </div>
+                          {col.accessor === "itemType" && (
+                            <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", marginTop: "4px", fontSize: "11px" }}>
+                              <label style={{ display: "inline-flex", alignItems: "center", gap: "3px", cursor: "pointer", color: "#0ea5e9", fontWeight: 700 }} title="Only rows with NBatch">
+                                <input type="checkbox" checked={filters.nBatch?.includes("(PRESENT)") ?? false} onChange={() => dispatch(toggleFilter({ column: "nBatch", value: "(PRESENT)" }))} /> N
+                              </label>
+                              <label style={{ display: "inline-flex", alignItems: "center", gap: "3px", cursor: "pointer", color: "#16a34a", fontWeight: 700 }} title="Only rows with CBatch">
+                                <input type="checkbox" checked={filters.cBatch?.includes("(PRESENT)") ?? false} onChange={() => dispatch(toggleFilter({ column: "cBatch", value: "(PRESENT)" }))} /> C
+                              </label>
+                            </div>
+                          )}
                           {col.children
                             ? col.children.map((child) => {
                                 const childAccessor = GROUP_HEADER_TO_ACCESSOR[child.header];
@@ -701,6 +741,29 @@ export default function ContractReviewPage() {
                                           </div>
                                         );
                                       }
+                                      if (accessor === "actuator") {
+                                        const rowId = String((row as Record<string, unknown>).id);
+                                        const current = actuatorOverrides[rowId] ?? (raw == null ? "" : String(raw));
+                                        const saving = !!actuatorSaving[rowId];
+                                        const options = current && !actuatorOptions.includes(current) ? [current, ...actuatorOptions] : actuatorOptions;
+                                        return (
+                                          <div key={child.header} style={{ display: "flex", alignItems: "flex-start", marginBottom: "2px" }}>
+                                            <span style={{ color: "#8a919a", flexShrink: 0, marginRight: "4px", whiteSpace: "nowrap" }}>{child.label}</span>
+                                            <select
+                                              value={current}
+                                              disabled={saving}
+                                              onClick={(e) => e.stopPropagation()}
+                                              onChange={(e) => handleActuatorSave(rowId, e.target.value)}
+                                              style={{ flex: 1, minWidth: 0, padding: "2px 4px", borderRadius: "4px", border: "1px solid #e5e7eb", fontSize: "inherit", background: saving ? "#f1f3f4" : "#fff", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? 0.6 : 1 }}
+                                            >
+                                              {current === "" && <option value="">—</option>}
+                                              {options.map((o) => (
+                                                <option key={o} value={o}>{o}</option>
+                                              ))}
+                                            </select>
+                                          </div>
+                                        );
+                                      }
                                       return (
                                         <div key={child.header} style={{ display: "flex", alignItems: "flex-start", marginBottom: "2px" }}>
                                           <span style={{ color: "#8a919a", flexShrink: 0, marginRight: "4px", whiteSpace: "nowrap" }}>{child.label}</span>
@@ -758,6 +821,22 @@ export default function ContractReviewPage() {
                                   >
                                     {isUpdating ? <Loader2 size={12} className="animate-spin mr-1" /> : null}
                                     {current ? current : <span style={{ color: "#9ca3af" }}>— Add remarks</span>}
+                                  </div>
+                                </td>
+                              );
+                            }
+                            if (col.accessor === "itemType") {
+                              const rowRec = row as Record<string, unknown>;
+                              const itemType = rowRec.itemType == null || String(rowRec.itemType).trim() === "" ? "-" : String(rowRec.itemType);
+                              const nBatch = rowRec.nBatch == null ? "" : String(rowRec.nBatch).trim();
+                              const cBatch = rowRec.cBatch == null ? "" : String(rowRec.cBatch).trim();
+                              const chipBase: React.CSSProperties = { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", fontSize: 10, fontWeight: 700, color: "#fff", flexShrink: 0, cursor: "help" };
+                              return (
+                                <td key={col.accessor} title={itemType} style={{ padding: "8px 6px", verticalAlign: "top" }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap" }}>
+                                    <span>{itemType === "-" ? <span style={{ color: "#b0b8c1" }}>-</span> : itemType}</span>
+                                    {nBatch && <span title={`NBatch: ${nBatch}`} style={{ ...chipBase, background: "#0ea5e9" }}>N</span>}
+                                    {cBatch && <span title={`CBatch: ${cBatch}`} style={{ ...chipBase, background: "#16a34a" }}>C</span>}
                                   </div>
                                 </td>
                               );

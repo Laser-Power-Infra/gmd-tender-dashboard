@@ -43,7 +43,7 @@ export const CONTRACT_REVIEW_COLUMN_GROUPS = [
     ],
   },
   {
-    label: "LC / RTGS / Issuing bank name",
+    label: "LC / RTGS",
     width: 420,
     children: [
       { header: "LC/RTGS REF NO", label: " LC/RTGSRef No -" },
@@ -52,7 +52,6 @@ export const CONTRACT_REVIEW_COLUMN_GROUPS = [
         header: "LAST DATE OF SHIPMENT/DATE OF LC",
         label: "Ship Date Of LC -",
       },
-      { header: "Issuing bank name", label: "Issuing Bank Name -" },
     ],
   },
 ];

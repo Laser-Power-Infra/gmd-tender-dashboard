@@ -70,8 +70,18 @@ function buildWhere(
   const fieldFilters: Record<string, unknown> = {};
   const groups: unknown[] = [];
 
+  // Presence-only filters for the hidden batch carriers. The "(PRESENT)"
+  // sentinel maps to a non-null, non-empty value; the header checkboxes toggle it.
+  for (const col of ["nBatch", "cBatch"]) {
+    if (col === skipColumn) continue;
+    if (filters[col]?.includes("(PRESENT)")) {
+      groups.push({ AND: [{ [col]: { not: null } }, { [col]: { not: "" } }] });
+    }
+  }
+
   for (const [col, values] of Object.entries(filters)) {
     if (!values || values.length === 0 || col === skipColumn) continue;
+    if (col === "nBatch" || col === "cBatch") continue;
     const nonBlank = values.filter((v) => v !== "(Blank)");
     const hasBlank = values.includes("(Blank)");
 
@@ -247,6 +257,39 @@ export const updateContractReviewItem = withLog(
     recordId: params.id,
     details: `Updated item on contract review #${params.id}`,
   }),
+);
+
+export const updateContractReviewActuator = withLog(
+  async (params: { id: string; actuator: string | null }) => {
+    await requireUser();
+    const actuator =
+      params.actuator == null
+        ? null
+        : params.actuator.trim().slice(0, 500) || null;
+    await prisma.contractReview.update({
+      where: { id: params.id },
+      data: { actuator },
+    });
+    return { ok: true, actuator };
+  },
+  (_result, params) => ({
+    action: "UPDATE" as const,
+    tableName: "ContractReview",
+    recordId: params.id,
+    details: `Updated actuator on contract review #${params.id}`,
+  }),
+);
+
+export const getActuatorOptions = withLog(
+  async () => {
+    await requireUser();
+    const rows = await prisma.actuatorOption.findMany({
+      orderBy: { optionName: "asc" },
+      select: { optionName: true },
+    });
+    return rows.map((r) => r.optionName);
+  },
+  () => null,
 );
 
 export const createContractReviewDiagramUploadUrl = withLog(
