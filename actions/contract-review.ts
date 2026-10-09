@@ -18,6 +18,7 @@ const s3 = new S3Client({
   endpoint: S3_ENDPOINT,
   region: S3_REGION,
   forcePathStyle: true,
+  requestChecksumCalculation: "WHEN_REQUIRED",
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
