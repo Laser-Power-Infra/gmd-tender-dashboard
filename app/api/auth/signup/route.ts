@@ -5,8 +5,9 @@ import { NextResponse } from "next/server"
 export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json()
+    const normalizedEmail = String(email ?? "").trim().toLowerCase()
 
-    if (!email || !password) {
+    if (!normalizedEmail || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
         { status: 400 }
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
       )
     }
 
-    const existing = await prisma.user.findUnique({ where: { email } })
+    const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } })
     if (existing) {
       return NextResponse.json(
         { error: "An account with this email already exists" },
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
     await prisma.user.create({
       data: {
         name: name || null,
-        email,
+        email: normalizedEmail,
         passwordHash,
         role: "user",
       },

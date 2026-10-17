@@ -13,12 +13,11 @@ export default function LoginForm() {
   const [state, formAction, pending] = useActionState(authenticate, undefined)
 
   useEffect(() => {
-    if (state && !state.startsWith("Invalid") && !state.startsWith("Something")) {
-      window.location.href = state
-    }
+    if (state && "url" in state) window.location.href = state.url
   }, [state])
 
-  const isError = state && (state.startsWith("Invalid") || state.startsWith("Something"))
+  const error = state && "error" in state ? state.error : null
+  const email = state?.email ?? ""
   const signupSuccess = searchParams.get("signup") === "success"
 
   return (
@@ -45,7 +44,11 @@ export default function LoginForm() {
             name="email"
             type="email"
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            defaultValue={email}
+            aria-invalid={error?.field === "email" || undefined}
+            className={`mt-1 block w-full rounded-lg border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-brand ${
+              error?.field === "email" ? "border-red-400" : "border-gray-300"
+            }`}
             placeholder="you@example.com"
           />
         </div>
@@ -59,14 +62,21 @@ export default function LoginForm() {
             name="password"
             type="password"
             required
-            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            aria-invalid={error?.field === "password" || undefined}
+            className={`mt-1 block w-full rounded-lg border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-brand ${
+              error?.field === "password" ? "border-red-400" : "border-gray-300"
+            }`}
             placeholder="Enter your password"
           />
         </div>
 
-        {isError && (
-          <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
-            {state}
+        {error && (
+          <div
+            role="alert"
+            aria-live="polite"
+            className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600"
+          >
+            {error.message}
           </div>
         )}
 
